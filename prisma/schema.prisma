@@ -1,0 +1,268 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model usuario {
+  ID                     Int       @id @default(autoincrement())
+  TIPO_IDENTIFICACION     String?
+  IDENTIFICACION   String @unique
+  CODIGO_VERIFICACION    String?
+  CLIENTE                Boolean?
+  TERCERO                Boolean?
+  CODEUCOR_NA            String?
+  EMPLEADO               Boolean?
+  ASOCIADO               Boolean?
+  PROVEEDOR              Boolean?
+  RAZONSOCIAL            String?
+  PRIMER_NOMBRE          String?
+  SEGUNDO_NOMBRE         String?
+  PRIMER_APELLIDO        String?
+  SEGUNDO_APELLIDO       String?
+  GENERO                 String?
+  FECHA_NACIMIENTO       DateTime?
+  SUCURSAL               String?
+  ESTADO                 String?
+  FECHA_INGRESO          DateTime?
+  ACTA_INGRESO           String?
+  ULTIMA_ACTUALIZACION   DateTime?
+  NACIONALIDAD           String?
+  ESTADO_CIVIL           String?
+  NUMERO_HIJOS           Int?
+  PERSONAS_A_CARGO       Int?
+  MAXIMO_TITULO          String?
+  CONYUGUE               String?
+
+  reingresos_usuario     reingresos_usuario[]
+  direccion_usuario      direccion_usuario[]
+  empleo                 empleo[]
+  finanzas_personales    finanzas_personales[]
+  cuenta_ahorros         cuenta_ahorros[]
+  credito_usuario        credito_usuario[]
+  usuario_rol            usuario_rol[]
+  pqr                    pqr[]
+}
+
+model reingresos_usuario {
+  ID               Int       @id @default(autoincrement())
+  usuario_id       Int
+  FECHA_REINGRESO  DateTime?
+  ACTA_REINGRESO   String?
+
+  usuario          usuario   @relation(fields: [usuario_id], references: [ID])
+}
+
+model direccion_usuario {
+  ID                     Int      @id @default(autoincrement())
+  usuario_id             Int
+  TIPO_ZONA              String?
+  DIRECCION_RESIDENCIA   String?
+  DIRECCION_LABORAL      String?
+  DIRECCION_CTA_EXT      String?
+  CIUDAD_RESIDENCIA      String?
+  DEPARTAMENTO_RESIDENCIA String?
+  PAIS_RESIDENCIA        String?
+  CIUDAD_LABORAL         String?
+  DEPARTAMENTO_LABORAL   String?
+  PAIS_LABORAL           String?
+  CIUDAD_CTA_EXT         String?
+  PAIS_CTA_EXT           String?
+  BARRIO                 String?
+  TELEFONO               String?
+  TELEFONO_LABORAL       String?
+  TELEFONO_RESIDENCIA    String?
+  ADDRESSLINE_CELULAR    String?
+  ADDRESSLINE_MAIL       String?
+  BANCO_CTA_EXT          String?
+  NRO_CTA_EXT            String?
+  MANEJA_CTA_EN_MONEDA_EXTRANJERA Boolean?
+
+  usuario                usuario  @relation(fields: [usuario_id], references: [ID])
+}
+
+model empleo {
+  ID                     Int      @id @default(autoincrement())
+  usuario_id             Int
+  IDENTIFICACION_COMPANIA String?
+  NOMBRE_COMPANIA        String?
+  EMPLEO_PRINCIPAL       String?
+  CARGO_OFICIO           String?
+  CODIGO_CIIU            String?
+  DESCRIPCION_CIIU       String?
+  RELACION_LABORAL       String?
+  VINCULO_LABORAL        String?
+  ESTADO_LABORAL         String?
+  TIPO_CONTRATO          String?
+  TIPO_SALARIO           String?
+  SALARIO                Float?
+  FRECUENCIA_PAGO        String?
+  FORMA_PAGO             String?
+
+  usuario                usuario  @relation(fields: [usuario_id], references: [ID])
+}
+
+model finanzas_personales {
+  ID                     Int      @id @default(autoincrement())
+  usuario_id             Int
+  DESCRIPCION_OTROS_INGRESOS String?
+  INGRESOS_OTROS         Float?
+  INGRESOS_ARRIENDOS     Float?
+  INGRESOS_HONORARIOS    Float?
+  INGRESOS_RENDIMIENTOS  Float?
+  ACTIVOS_INMUEBLES      Float?
+  ACTIVOS_INVERSIONES    Float?
+  ACTIVOS_OTROS          Float?
+  ACTIVOS_VEHICULOS      Float?
+  PASIVOS_OTROS          Float?
+  GASTOS_CREDITOS        Float?
+  GASTOS_HIPOTECA        Float?
+  GASTOS_OTROS           Float?
+  GASTOS_FAMILIARES      Float?
+  GASTOS_ARRENDAMIENTO   Float?
+  APORTES                Float?
+
+  usuario                usuario  @relation(fields: [usuario_id], references: [ID])
+}
+
+model cuenta_ahorros {
+  ID                     Int      @id @default(autoincrement())
+  usuario_id             Int
+  TipoIden               String?
+  NIT                    String?
+  CodigoContable         Int?
+  NombreDeposito         String?
+  TipoAhorro             String?
+  Amortizacion           Float?
+  FechaApertura          DateTime?
+  Plazo                  Float?
+  FechaVencimiento       DateTime?
+  Modalidad              String?
+  TasaInteresNominal     Float?
+  TasaInteresEfectiva    Float?
+  DepositoInicial        Float?
+  NumeroCuenta           String?
+  excentagmf             String?
+  fechaaceptacionegmf    DateTime?
+  Estado                 String?
+  CtaBajoMonto           String?
+  Cotitulares            String?
+  ConjuntaColectivo      String?
+
+  usuario                usuario  @relation(fields: [usuario_id], references: [ID])
+}
+
+model credito_usuario {
+  ID                     Int      @id @default(autoincrement())
+  usuario_id             Int
+  TipoIden               String?
+  NIT                    String?
+  CodigoContable         String?
+  ModificacionesAlCredito Float?
+  NroCredito             String?
+  FechaDesembolsoInicial DateTime?
+  FechaVencimiento       DateTime?
+  Morosidad              Float?
+  TipoCuota              String?
+  AlturaCuota            Float?
+  Amortizacion           Float?
+  Modalidad              String?
+  TasaInteresEfectiva    Float?
+  ValorPrestamo          Float?
+  ValorCuotaFija         Float?
+  SaldoCapital           Float?
+  SaldoIntereses         Float?
+  OtrosSaldos            Float?
+  ValorMora              Float?
+  ValosCuotasExtra       Float?
+  MesesCuotaExtra        Float?
+  fechaultimopago        DateTime?
+
+  credito_prestamo       credito_prestamo[]
+  tarjeta_credito        tarjeta_credito[]
+  garantia               garantia[]
+
+  usuario                usuario  @relation(fields: [usuario_id], references: [ID])
+}
+
+model credito_prestamo {
+  ID                     Int      @id @default(autoincrement())
+  credito_usuario_id     Int
+  clasegarantia          String?
+  destinocredito         String?
+  CodOficina             String?
+  AmortiCapital          Float?
+  TipoVivienda           String?
+  VIS                    Float?
+  RangoTipo              String?
+  EntidadRedescuento     String?
+  MargenRedescuento      Float?
+  Subsidio               String?
+  Desembolso             String?
+  Moneda                 String?
+  AportesSociales        Float?
+  LineaCredEntidad       String?
+  NumModificaciones       Float?
+  Estadocredito          String?
+  NITPatronal            String?
+  NombrePatronal         String?
+
+  credito_usuario        credito_usuario @relation(fields: [credito_usuario_id], references: [ID])
+}
+
+model tarjeta_credito {
+  ID                     Int      @id @default(autoincrement())
+  credito_usuario_id     Int
+  TARJCREDCUPROT         String?
+  ENTOTORGARANT          String?
+
+  credito_usuario        credito_usuario @relation(fields: [credito_usuario_id], references: [ID])
+}
+
+model garantia {
+  ID                     Int      @id @default(autoincrement())
+  credito_usuario_id     Int
+  Garantia               Float?
+  FechaAvaluo            DateTime?
+  Deterioro              Float?
+  DeterioroInteres       Float?
+  Contingencia           Float?
+
+  credito_usuario        credito_usuario @relation(fields: [credito_usuario_id], references: [ID])
+}
+
+model rol {
+  ID          Int    @id @default(autoincrement())
+  nombre      String @unique
+  descripcion String?
+
+  usuario_rol usuario_rol[]
+}
+
+model usuario_rol {
+  ID          Int     @id @default(autoincrement())
+  usuario_id  Int
+  rol_id      Int
+
+  usuario     usuario @relation(fields: [usuario_id], references: [ID])
+  rol         rol     @relation(fields: [rol_id], references: [ID])
+}
+
+model pqr {
+  ID          Int      @id @default(autoincrement())
+  usuario_id  Int
+  descripcion String?
+  fecha       DateTime?
+  servicio    String?
+
+  usuario     usuario @relation(fields: [usuario_id], references: [ID])
+}

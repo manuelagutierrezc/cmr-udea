@@ -1,6 +1,4 @@
-import { LayoutDashboard } from "lucide-react"
 import { SignUpForm } from "@/components/signup-form"
-import Link from "next/link";
 
 export default function Registro() {
   return (
@@ -19,12 +17,9 @@ export default function Registro() {
               alt="Imagen de logo"
               className="max-w-[164px]"
             />
-          <Link href="#" className="flex items-center gap-2 font-medium">
-            <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-              <LayoutDashboard className="size-4" />
-            </div>
+          <div className="flex items-center gap-2 font-medium">
             CRM Cooprudea
-          </Link>
+          </div>
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">

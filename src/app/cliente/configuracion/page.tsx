@@ -9,7 +9,7 @@ import {
 
 import { clientSidebarData } from "@/data/client-sidebar-data"
 
-export default function EnviarPQRS() {
+export default function ConfiguracionCliente() {
   return (
     <SidebarProvider
       style={
@@ -26,7 +26,7 @@ export default function EnviarPQRS() {
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               <div className="px-4 lg:px-6">
-                <p>Esta es la página &quot;Enviar PQRS&quot;.</p>
+              <p>Esta es la página &quot;Configuración Cliente&quot;.</p>
               </div>
             </div>
           </div>

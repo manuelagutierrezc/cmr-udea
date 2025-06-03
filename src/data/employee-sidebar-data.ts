@@ -9,7 +9,7 @@ import {
 
 export const employeeSidebarData = {
   user: {
-    name: "Usuario",
+    name: "Empleado",
     email: "ejemplo@correo.com",
     avatar: "#",
   },

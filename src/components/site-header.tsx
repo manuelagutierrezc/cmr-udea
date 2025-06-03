@@ -26,10 +26,12 @@ export function SiteHeader({ title, items }: SiteHeaderProps) {
           className="mx-2 data-[orientation=vertical]:h-4"
         />
         <h1 className="text-base font-medium">{title}</h1>
-        <Separator
-          orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
-        />
+        {items && items.length > 0 && (
+          <Separator
+            orientation="vertical"
+            className="mx-2 data-[orientation=vertical]:h-4"
+          />
+        )}
         {items?.map((item) => (
           <Button key={item.title} variant="ghost" onClick={() => router.push(item.href)}>
             {item.title}

@@ -11,7 +11,7 @@ import { employeeSidebarData } from "@/data/employee-sidebar-data"
 
 //Data table imports.
 import { columns, Payment } from "./columns"
-import { DataTable } from "./data-table"
+import { DataTable } from "@/components/data-table"
 import { mockClients } from "./mock-data" // Mock data for testing purposes.
 
 import { useEffect, useState } from "react"

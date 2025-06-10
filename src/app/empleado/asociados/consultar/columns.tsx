@@ -54,27 +54,22 @@ export const columns: ColumnDef<Payment>[] = [
   {
     //This is the actions column, it includes a dropdown menu.
     id: "actions",
-    cell: ({ row }) => {
-      const payment = row.original
+    cell: () => {
       
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">Abrir menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
+            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Ver cartera de crédito</DropdownMenuItem>
+            <DropdownMenuItem>Ver ahorros</DropdownMenuItem>
+            <DropdownMenuItem>Ver aportes</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

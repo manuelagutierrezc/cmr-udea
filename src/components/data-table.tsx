@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button" // For pagination.
 import { Input } from "@/components/ui/input" // For filtering.
 
 // For filtering options.
+import { ListFilter } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -51,7 +52,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>( // For filtering.
     []
   )
-  const [filterColumn, setFilterColumn] = React.useState("Columna"); // For filtering options.
+  const [filterColumn, setFilterColumn] = React.useState("ID"); // For filtering options.
 
   const table = useReactTable({
     data,
@@ -78,8 +79,9 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="flex items-center">
-              <p className="mr-4">Buscar por:</p>
-              <Button variant="outline" className="capitalize mr-4">
+              <ListFilter className="h-4 w-4 mr-2" />
+              <p className="mx-2">Filtrar por:</p>
+              <Button variant="outline" className="capitalize mx-2">
                 {filterColumn}
               </Button>
             </div>
@@ -101,12 +103,12 @@ export function DataTable<TData, TValue>({
         </DropdownMenu>
         {/* Input for filtering. */}
         <Input
-          placeholder="Buscar..."
+          placeholder="Filtrar..."
           value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(filterColumn)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm mx-2"
         />
         {/* Component for column visibility options. */}
         <DataTableViewOptions table={table} />

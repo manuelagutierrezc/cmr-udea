@@ -10,19 +10,19 @@ import {
 import { employeeSidebarData } from "@/data/employee-sidebar-data"
 
 //Data table imports.
-import { columns, Payment } from "./columns"
+import { columns, Usuario } from "./columns"
 import { DataTable } from "@/components/data-table"
 import { mockClients } from "./mock-data" // Mock data for testing purposes.
 
 import { useEffect, useState } from "react"
 
-async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
+async function getData(): Promise<Usuario[]> {
+  // Fetch data from API here.
   return mockClients // Mock data for testing purposes.
 }
 
 export default function ConsultarAsociados() {
-  const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = useState<Usuario[]>([]);
   useEffect(() => {onInit()}, []);
 
   async function onInit() {
@@ -52,7 +52,7 @@ export default function ConsultarAsociados() {
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               <div className="px-4 lg:px-6">
-                <p className="py-4">Esta es la página &quot;Consultar Asociados&quot;.</p>
+                <h1 className="text-xl font-medium py-4">Consultar Asociados</h1>
                 <DataTable columns={columns} data={data} />
               </div>
             </div>

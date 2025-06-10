@@ -11,7 +11,7 @@ async function main() {
         TIPO_IDENTIFICACION: 'CC',
         PRIMER_NOMBRE: faker.person.firstName(),
         PRIMER_APELLIDO: faker.person.lastName(),
-        EDAD: faker.number.int({ min: 18, max: 65 }),
+        EDAD: faker.number.int({ min: 18, max: 100 }),
         CLIENTE: true,
         EMPLEADO: false,
         FECHA_NACIMIENTO: faker.date.birthdate(),

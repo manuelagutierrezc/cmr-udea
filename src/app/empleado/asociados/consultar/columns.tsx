@@ -14,7 +14,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { DataTableColumnHeader } from "@/components/data-table-column-header"
+// Column creation helper
+import {makeColumn} from "@/lib/column-helpers"
 
 // This type is used to define the shape of our data.
 export type Usuario = {
@@ -53,7 +54,7 @@ export type Usuario = {
 
 // This defines the columns of the table.
 export const columns: ColumnDef<Usuario>[] = [
-    {
+  {
     //This is the actions column, it includes a dropdown menu.
     id: "actions",
     cell: () => {
@@ -75,198 +76,165 @@ export const columns: ColumnDef<Usuario>[] = [
       )
     },
   },
-  {
-    accessorKey: "ID",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    )
-  },
-  {
-    accessorKey: "IDENTIFICACION",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="IDENTIFICACION" />
-    ),
-  },
-  {
-    accessorKey: "TIPO_IDENTIFICACION",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="TIPO_IDENTIFICACION" />
-    ),
-  },
-  {
-    accessorKey: "PRIMER_NOMBRE",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="PRIMER_NOMBRE" />
-    ),
-  },
-  {
-    accessorKey: "PRIMER_APELLIDO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="PRIMER_APELLIDO" />
-    ),
-  },
-  {
-    accessorKey: "EDAD",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="EDAD" />
-    ),
-  },
-  {
-    accessorKey: "CLIENTE",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="CLIENTE" />
-    ),
-  },
-  {
-    accessorKey: "EMPLEADO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="EMPLEADO" />
-    ),
-  },
-  {
-    accessorKey: "FECHA_NACIMIENTO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="FECHA_NACIMIENTO" />
-    ),
+  makeColumn<Usuario>({
+    key: "ID",
+    label: "ID",
+    type: "number",
+  }),
+  makeColumn<Usuario>({
+    key: "IDENTIFICACION",
+    label: "Identificación",
+    type: "number",
+  }),
+  makeColumn<Usuario>({
+    key: "TIPO_IDENTIFICACION",
+    label: "Tipo de identificación",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "PRIMER_NOMBRE",
+    label: "Primer nombre",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "PRIMER_APELLIDO",
+    label: "Primer apellido",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "EDAD",
+    label: "Edad",
+    type: "number",
+  }),
+  makeColumn<Usuario>({
+    key: "CLIENTE",
+    label: "Cliente",
+    type: "boolean",
+  }),
+  makeColumn<Usuario>({
+    key: "EMPLEADO",
+    label: "Empleado",
+    type: "boolean",
+  }),
+  makeColumn<Usuario>({
+    key: "FECHA_NACIMIENTO",
+    label: "Fecha de nacimiento",
+    type: "date",
     cell: ({ row }) => {
       const date: Date = row.getValue("FECHA_NACIMIENTO")
       return date.toLocaleDateString("es-ES")
     },
-  },
-  {
-    accessorKey: "FECHA_INGRESO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="FECHA_INGRESO" />
-    ),
-    cell: ({ row }) => {
-      const date: Date = row.getValue("FECHA_INGRESO")
-      return date.toLocaleDateString("es-ES")
-    },
-  },
-  {
-    accessorKey: "ACTA_INGRESO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ACTA_INGRESO" />
-    ),
-  },
-  {
-    accessorKey: "ESTADO_CIVIL",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ESTADO_CIVIL" />
-    ),
-  },
-  {
-    accessorKey: "PERSONAS_A_CARGO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="PERSONAS_A_CARGO" />
-    ),
-  },
-  {
-    accessorKey: "GENERO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="GENERO" />
-    ),
-  },
-  {
-    accessorKey: "ESTADO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ESTADO" />
-    ),
-  },
-  {
-    accessorKey: "PAIS_NACIMIENTO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="PAIS_NACIMIENTO" />
-    ),
-  },
-  {
-    accessorKey: "DEPARTAMENTO_NACIMIENTO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="DEPARTAMENTO_NACIMIENTO" />
-    ),
-  },
-  {
-    accessorKey: "MUNICIPIO_NACIMIENTO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="MUNICIPIO_NACIMIENTO" />
-    ),
-  },
-  {
-    accessorKey: "PAIS_IDENTIFICACION",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="PAIS_IDENTIFICACION" />
-    ),
-  },
-  {
-    accessorKey: "PAIS_RESIDENCIA",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="PAIS_RESIDENCIA" />
-    ),
-  },
-  {
-    accessorKey: "DEPARTAMENTO_RESIDENCIA",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="DEPARTAMENTO_RESIDENCIA" />
-    ),
-  },
-  {
-    accessorKey: "CIUDAD_RESIDENCIA",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="CIUDAD_RESIDENCIA" />
-    ),
-  },
-  {
-    accessorKey: "DIRECCION_RESIDENCIA",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="DIRECCION_RESIDENCIA" />
-    ),
-  },
-  {
-    accessorKey: "ESTRATO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ESTRATO" />
-    ),
-  },
-  {
-    accessorKey: "OCUPACION",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="OCUPACION" />
-    ),
-  },
-  {
-    accessorKey: "NIVEL_ACADEMICO",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="NIVEL_ACADEMICO" />
-    ),
-  },
-  {
-    accessorKey: "TIPO_VIVIENDA",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="TIPO_VIVIENDA" />
-    ),
-  },
-  {
-    accessorKey: "ADDRESSLINE_MAIL",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ADDRESSLINE_MAIL" />
-    ),
-  },
-  {
-    accessorKey: "ADDRESSLINE_CELULAR",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ADDRESSLINE_CELULAR" />
-    ),
-  },
-  {
-    accessorKey: "LUGAR_EXPEDICION",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="LUGAR_EXPEDICION" />
-    ),
-  },
-  {
-    accessorKey: "RAZONSOCIAL",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="RAZONSOCIAL" />
-    ),
-  },
+  }),
+  makeColumn<Usuario>({
+    key: "FECHA_INGRESO",
+    label: "Fecha de ingreso",
+    type: "date",
+    
+  }),
+  makeColumn<Usuario>({
+    key: "ACTA_INGRESO",
+    label: "Acta de ingreso",
+    type: "number",
+  }),
+  makeColumn<Usuario>({
+    key: "ESTADO_CIVIL",
+    label: "Estado civil",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "PERSONAS_A_CARGO",
+    label: "Personas a cargo",
+    type: "number",
+  }),
+  makeColumn<Usuario>({
+    key: "GENERO",
+    label: "Género",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "ESTADO",
+    label: "Estado",
+    type: "boolean",
+    cell: ({ row }) => (row.getValue("ESTADO") ? "Activo" : "Inactivo"),
+  }),
+  makeColumn<Usuario>({
+    key: "PAIS_NACIMIENTO",
+    label: "País de nacimiento",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "DEPARTAMENTO_NACIMIENTO",
+    label: "Departamento de nacimiento",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "MUNICIPIO_NACIMIENTO",
+    label: "Municipio de nacimiento",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "PAIS_IDENTIFICACION",
+    label: "País de identificación",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "PAIS_RESIDENCIA",
+    label: "País de residencia",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "DEPARTAMENTO_RESIDENCIA",
+    label: "Departamento de residencia",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "CIUDAD_RESIDENCIA",
+    label: "Ciudad de residencia",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "DIRECCION_RESIDENCIA",
+    label: "Dirección de residencia",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "ESTRATO",
+    label: "Estrato",
+    type: "number",
+  }),
+  makeColumn<Usuario>({
+    key: "OCUPACION",
+    label: "Ocuáción",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "NIVEL_ACADEMICO",
+    label: "Nivel académico",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "TIPO_VIVIENDA",
+    label: "Tipo de vivienda",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "ADDRESSLINE_MAIL",
+    label: "email",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "ADDRESSLINE_CELULAR",
+    label: "Celular",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "LUGAR_EXPEDICION",
+    label: "Lugar de expedición",
+    type: "string",
+  }),
+  makeColumn<Usuario>({
+    key: "RAZONSOCIAL",
+    label: "Razón social",
+    type: "string",
+  }),
 ]

@@ -81,8 +81,8 @@ export function DataTable<TData, TValue>({
             <div className="flex items-center">
               <ListFilter className="h-4 w-4 mr-2" />
               <p className="mx-2">Filtrar por:</p>
-              <Button variant="outline" className="capitalize mx-2">
-                {filterColumn}
+              <Button variant="outline" className="mx-2">
+                {table.getColumn(filterColumn)?.columnDef.meta?.label ?? filterColumn}
               </Button>
             </div>
           </DropdownMenuTrigger>
@@ -93,10 +93,10 @@ export function DataTable<TData, TValue>({
               .map((col) => (
                 <DropdownMenuItem
                   key={col.id}
-                  className="capitalize"
+                  className="first-letter:uppercase"
                   onClick={() => setFilterColumn(col.id)}
                 >
-                  {col.id}
+                  {col.columnDef.meta?.label ?? col.id}
                 </DropdownMenuItem>
               ))}
           </DropdownMenuContent>

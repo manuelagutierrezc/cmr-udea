@@ -10,7 +10,8 @@ import {
 import { employeeSidebarData } from "@/data/employee-sidebar-data"
 
 //Data table imports.
-import { columns, Usuario } from "./columns"
+import { UsuarioColumns } from "./usuario-columns"
+import { Usuario } from "@/lib/types/models"
 import { DataTable } from "@/components/data-table"
 import { mockClients } from "./mock-data" // Mock data for testing purposes.
 
@@ -53,7 +54,7 @@ export default function ConsultarAsociados() {
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               <div className="px-4 lg:px-6">
                 <h1 className="text-xl font-medium py-4">Consultar Asociados</h1>
-                <DataTable columns={columns} data={data} />
+                <DataTable columns={UsuarioColumns} data={data} />
               </div>
             </div>
           </div>

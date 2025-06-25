@@ -93,7 +93,6 @@ export function DataTable<TData, TValue>({
               .map((col) => (
                 <DropdownMenuItem
                   key={col.id}
-                  className="first-letter:uppercase"
                   onClick={() => setFilterColumn(col.id)}
                 >
                   {col.columnDef.meta?.label ?? col.id}

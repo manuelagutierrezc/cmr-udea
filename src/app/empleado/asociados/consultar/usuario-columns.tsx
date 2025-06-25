@@ -2,77 +2,35 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 
-// Imports for the dropdown menu in actions column.
+// Imports for the actions column.
 import { Search } from "lucide-react"
 import { Button } from "@/components/ui/button" 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 // Column creation helper
 import {makeColumn} from "@/lib/column-helpers"
 
 // This type is used to define the shape of our data.
-export type Usuario = {
-  ID: number
-  IDENTIFICACION: number
-  TIPO_IDENTIFICACION: "CC" | "NRO DE NIT"
-  PRIMER_NOMBRE: string
-  PRIMER_APELLIDO: string
-  EDAD: number
-  CLIENTE: boolean
-  EMPLEADO: boolean
-  FECHA_NACIMIENTO: Date
-  FECHA_INGRESO: Date
-  ACTA_INGRESO: number
-  ESTADO_CIVIL: "SOLTERO" | "CASADO" | "DIVORCIADO"
-  PERSONAS_A_CARGO: number
-  GENERO: "MASCULINO" | "FEMENINO" | "OTRO"
-  ESTADO: "ACTIVO" | "INACTIVO"
-  PAIS_NACIMIENTO: string
-  DEPARTAMENTO_NACIMIENTO: string
-  MUNICIPIO_NACIMIENTO: string
-  PAIS_IDENTIFICACION: string
-  PAIS_RESIDENCIA: string
-  DEPARTAMENTO_RESIDENCIA: string
-  CIUDAD_RESIDENCIA: string
-  DIRECCION_RESIDENCIA: string
-  ESTRATO: number
-  OCUPACION: string
-  NIVEL_ACADEMICO: "BACHILLER" | "TÉCNICO" | "UNIVERSITARIO" | "POSGRADO"
-  TIPO_VIVIENDA: "PROPIA" | "ARRENDADA"
-  ADDRESSLINE_MAIL: string
-  ADDRESSLINE_CELULAR: number
-  LUGAR_EXPEDICION: string
-  RAZONSOCIAL: string
-}
+import { Usuario } from "@/lib/types/models"
 
 // This defines the columns of the table.
-export const columns: ColumnDef<Usuario>[] = [
+export const UsuarioColumns: ColumnDef<Usuario>[] = [
   {
-    //This is the actions column, it includes a dropdown menu.
+    //This is the actions column, clicking the button will open a new tab with the user's details.
     id: "actions",
-    cell: () => {
-      
+    cell: ({ row }) => {
+      const id = row.original.ID
+
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abrir menu</span>
-              <Search className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Detalles</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Ver cartera de crédito</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button
+          variant="ghost"
+          className="h-8 w-8 p-0"
+          onClick={() => {
+              window.open(`/empleado/asociados/consultar/${id}`, "_blank")
+            }}
+        >
+          <span className="sr-only">Abrir menu</span>
+          <Search className="h-4 w-4"/>
+        </Button>
       )
     },
   },
@@ -219,7 +177,7 @@ export const columns: ColumnDef<Usuario>[] = [
   }),
   makeColumn<Usuario>({
     key: "ADDRESSLINE_MAIL",
-    label: "email",
+    label: "Email",
     type: "string",
   }),
   makeColumn<Usuario>({

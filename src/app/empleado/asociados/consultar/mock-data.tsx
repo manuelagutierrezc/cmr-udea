@@ -1,4 +1,4 @@
-import { Usuario } from "@/app/empleado/asociados/consultar/columns"
+import { Usuario, FinanzasPersonales, TarjetaCredito } from "@/lib/types/models"
 
 export const mockClients: Usuario[] = [
   {
@@ -397,4 +397,37 @@ export const mockClients: Usuario[] = [
     LUGAR_EXPEDICION: "BOGOTA",
     RAZONSOCIAL: "HOSPITAL ALMA MATER DE ANTIOQUIA",
   },
+]
+
+export const mockFinanzas: FinanzasPersonales[] = [
+  {
+    ID:                             1,
+    usuario_id:                     1,
+    DESCRIPCION_OTROS_INGRESOS:     "Descripción de otros ingresos",
+    INGRESOS_OTROS:                 242,
+    INGRESOS_ARRIENDOS:             63464,
+    INGRESOS_HONORARIOS:            23535,
+    INGRESOS_RENDIMIENTOS:          3462235,
+    ACTIVOS_INMUEBLES:              45645,
+    ACTIVOS_INVERSIONES:            4563,
+    ACTIVOS_OTROS:                  2354,
+    ACTIVOS_VEHICULOS:              23435,
+    PASIVOS_OTROS:                  2342,
+    GASTOS_CREDITOS:                745,
+    GASTOS_HIPOTECA:                965,
+    GASTOS_OTROS:                   3467,
+    GASTOS_FAMILIARES:              753,
+    GASTOS_ARRENDAMIENTO:           5434,
+    APORTES:                        34646,
+  },
+]
+
+export const mockTarjetas: TarjetaCredito[] = [
+  {
+    ID:                  1,
+    usuario_id:          1,
+    credito_usuario_id:  1,
+    TARJCREDCUPROT:      "123456789",
+    ENTOTORGARANT:       "Banco de Bogotá",
+  }
 ]

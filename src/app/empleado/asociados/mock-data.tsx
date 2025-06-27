@@ -1,8 +1,8 @@
-import { Usuario, FinanzasPersonales, TarjetaCredito } from "@/lib/types/models"
+import { Usuario, TarjetaCredito, ReingresosUsuario, DireccionUsuario, Empleo, FinanzasPersonales } from "@/lib/types/models"
 
-export const mockClients: Usuario[] = [
+export const mockUsuario: Usuario[] = [
   {
-    ID: 1,
+    ID: 0,
     IDENTIFICACION: 1283740264,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "JUAN",
@@ -35,7 +35,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "UNIVERSIDAD DE ANTIOQUIA",
   },
   {
-    ID: 2,
+    ID: 1,
     IDENTIFICACION: 1283740364,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "MARIA",
@@ -68,7 +68,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "UNIVERSIDAD DE ANTIOQUIA",
   },
   {
-    ID: 3,
+    ID: 2,
     IDENTIFICACION: 1283749725,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "ABELARDO",
@@ -101,7 +101,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "UNIVERSIDAD DE ANTIOQUIA",
   },
   {
-    ID: 4,
+    ID: 3,
     IDENTIFICACION: 1283749725,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "ADA",
@@ -134,7 +134,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "HOSPITAL ALMA MATER DE ANTIOQUIA",
   },
     {
-    ID: 5,
+    ID: 4,
     IDENTIFICACION: 1283740265,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "JUAN",
@@ -167,7 +167,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "UNIVERSIDAD DE ANTIOQUIA",
   },
   {
-    ID: 6,
+    ID: 5,
     IDENTIFICACION: 1283760364,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "MARIA",
@@ -200,7 +200,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "UNIVERSIDAD DE ANTIOQUIA",
   },
   {
-    ID: 7,
+    ID: 6,
     IDENTIFICACION: 1283749727,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "ABELARDO",
@@ -233,7 +233,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "UNIVERSIDAD DE ANTIOQUIA",
   },
   {
-    ID: 8,
+    ID: 7,
     IDENTIFICACION: 1283789725,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "ADA",
@@ -266,7 +266,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "HOSPITAL ALMA MATER DE ANTIOQUIA",
   },
   {
-    ID: 9,
+    ID: 8,
     IDENTIFICACION: 1283740290,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "JUAN",
@@ -299,7 +299,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "UNIVERSIDAD DE ANTIOQUIA",
   },
   {
-    ID: 10,
+    ID: 9,
     IDENTIFICACION: 1283740310,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "MARIA",
@@ -332,7 +332,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "UNIVERSIDAD DE ANTIOQUIA",
   },
   {
-    ID: 11,
+    ID: 10,
     IDENTIFICACION: 1283749711,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "ABELARDO",
@@ -365,7 +365,7 @@ export const mockClients: Usuario[] = [
     RAZONSOCIAL: "UNIVERSIDAD DE ANTIOQUIA",
   },
   {
-    ID: 12,
+    ID: 11,
     IDENTIFICACION: 1283741225,
     TIPO_IDENTIFICACION: "CC",
     PRIMER_NOMBRE: "ADA",
@@ -399,35 +399,317 @@ export const mockClients: Usuario[] = [
   },
 ]
 
-export const mockFinanzas: FinanzasPersonales[] = [
+export const mockReingresosUsuario: ReingresosUsuario[] = [
   {
-    ID:                             1,
-    usuario_id:                     1,
-    DESCRIPCION_OTROS_INGRESOS:     "Descripción de otros ingresos",
-    INGRESOS_OTROS:                 242,
-    INGRESOS_ARRIENDOS:             63464,
-    INGRESOS_HONORARIOS:            23535,
-    INGRESOS_RENDIMIENTOS:          3462235,
-    ACTIVOS_INMUEBLES:              45645,
-    ACTIVOS_INVERSIONES:            4563,
-    ACTIVOS_OTROS:                  2354,
-    ACTIVOS_VEHICULOS:              23435,
-    PASIVOS_OTROS:                  2342,
-    GASTOS_CREDITOS:                745,
-    GASTOS_HIPOTECA:                965,
-    GASTOS_OTROS:                   3467,
-    GASTOS_FAMILIARES:              753,
-    GASTOS_ARRENDAMIENTO:           5434,
-    APORTES:                        34646,
+    "ID": 0,
+    "usuario_id": 101,
+    "FECHA_REINGRESO": new Date("2023-01-15T00:00:00.000Z"),
+    "ACTA_REINGRESO": "ACT-2023-001"
   },
+  {
+    "ID": 1,
+    "usuario_id": 102,
+    "FECHA_REINGRESO": new Date("2022-11-05T00:00:00.000Z"),
+    "ACTA_REINGRESO": "ACT-2022-112"
+  },
+  {
+    "ID": 2,
+    "usuario_id": 103,
+    "FECHA_REINGRESO": new Date("2021-07-30T00:00:00.000Z"),
+    "ACTA_REINGRESO": "ACT-2021-078"
+  },
+  {
+    "ID": 3,
+    "usuario_id": 104,
+    "FECHA_REINGRESO": new Date("2024-03-10T00:00:00.000Z"),
+    "ACTA_REINGRESO": "ACT-2024-015"
+  },
+  {
+    "ID": 4,
+    "usuario_id": 105,
+    "FECHA_REINGRESO": new Date("2020-09-22T00:00:00.000Z"),
+    "ACTA_REINGRESO": "ACT-2020-233"
+  }
+]
+
+export const mockDireccionUsuario: DireccionUsuario[] = [
+  {
+    "ID": 0,
+    "usuario_id": 201,
+    "TIPO_ZONA": "Urbana",
+    "DIRECCION_RESIDENCIA": "Calle 123 #45-67",
+    "CIUDAD_RESIDENCIA": "Bogotá",
+    "DEPARTAMENTO_RESIDENCIA": "Cundinamarca",
+    "PAIS_RESIDENCIA": "Colombia",
+    "BARRIO": "Chapinero",
+    "TELEFONO": "6011234567",
+    "ADDRESSLINE_CELULAR": "3001234567",
+    "ADDRESSLINE_MAIL": "usuario1@correo.com",
+    "MANEJA_CTA_EN_MONEDA_EXTRANJERA": false
+  },
+  {
+    "ID": 1,
+    "usuario_id": 202,
+    "TIPO_ZONA": "Rural",
+    "DIRECCION_RESIDENCIA": "Vereda La Esperanza",
+    "CIUDAD_RESIDENCIA": "Pereira",
+    "DEPARTAMENTO_RESIDENCIA": "Risaralda",
+    "PAIS_RESIDENCIA": "Colombia",
+    "TELEFONO_RESIDENCIA": "6063344556",
+    "ADDRESSLINE_CELULAR": "3102345678",
+    "ADDRESSLINE_MAIL": "usuario2@correo.com",
+    "MANEJA_CTA_EN_MONEDA_EXTRANJERA": true,
+    "BANCO_CTA_EXT": "Banco de España",
+    "NRO_CTA_EXT": "ES9121000418450200051332",
+    "PAIS_CTA_EXT": "España"
+  },
+  {
+    "ID": 2,
+    "usuario_id": 203,
+    "TIPO_ZONA": "Urbana",
+    "DIRECCION_RESIDENCIA": "Carrera 10 #22-33",
+    "DIRECCION_LABORAL": "Calle 80 #15-10",
+    "CIUDAD_RESIDENCIA": "Medellín",
+    "DEPARTAMENTO_RESIDENCIA": "Antioquia",
+    "PAIS_RESIDENCIA": "Colombia",
+    "CIUDAD_LABORAL": "Medellín",
+    "DEPARTAMENTO_LABORAL": "Antioquia",
+    "PAIS_LABORAL": "Colombia",
+    "TELEFONO_LABORAL": "6049876543",
+    "ADDRESSLINE_CELULAR": "3013456789",
+    "ADDRESSLINE_MAIL": "usuario3@correo.com",
+    "MANEJA_CTA_EN_MONEDA_EXTRANJERA": false
+  },
+  {
+    "ID": 3,
+    "usuario_id": 204,
+    "TIPO_ZONA": "Urbana",
+    "DIRECCION_RESIDENCIA": "Av. 5 #55-99",
+    "CIUDAD_RESIDENCIA": "Cali",
+    "DEPARTAMENTO_RESIDENCIA": "Valle del Cauca",
+    "PAIS_RESIDENCIA": "Colombia",
+    "TELEFONO": "6022233445",
+    "TELEFONO_RESIDENCIA": "6025566778",
+    "ADDRESSLINE_CELULAR": "3114567890",
+    "ADDRESSLINE_MAIL": "usuario4@correo.com",
+    "BARRIO": "El Lido",
+    "MANEJA_CTA_EN_MONEDA_EXTRANJERA": false
+  },
+  {
+    "ID": 4,
+    "usuario_id": 205,
+    "TIPO_ZONA": "Rural",
+    "DIRECCION_RESIDENCIA": "Finca La Loma",
+    "DIRECCION_CTA_EXT": "123 Maple St, Toronto",
+    "CIUDAD_CTA_EXT": "Toronto",
+    "PAIS_CTA_EXT": "Canadá",
+    "BANCO_CTA_EXT": "Scotiabank",
+    "NRO_CTA_EXT": "002356789012",
+    "ADDRESSLINE_CELULAR": "3125678901",
+    "ADDRESSLINE_MAIL": "usuario5@correo.com",
+    "MANEJA_CTA_EN_MONEDA_EXTRANJERA": true
+  }
+]
+
+export const mockEmpleo: Empleo[] = [
+  {
+    "ID": 0,
+    "usuario_id": 0,
+    "IDENTIFICACION_COMPANIA": "900123456",
+    "NOMBRE_COMPANIA": "Cooperativa ABC",
+    "EMPLEO_PRINCIPAL": "Sí",
+    "CARGO_OFICIO": "Asesor financiero",
+    "CODIGO_CIIU": "6511",
+    "DESCRIPCION_CIIU": "Actividades de bancos comerciales",
+    "RELACION_LABORAL": "Empleado",
+    "VINCULO_LABORAL": "Contrato indefinido",
+    "ESTADO_LABORAL": "Activo",
+    "TIPO_CONTRATO": "Indefinido",
+    "TIPO_SALARIO": "Fijo",
+    "SALARIO": 3200000,
+    "FRECUENCIA_PAGO": "Mensual",
+    "FORMA_PAGO": "Transferencia"
+  },
+  {
+    "ID": 1,
+    "usuario_id": 1,
+    "IDENTIFICACION_COMPANIA": "800987654",
+    "NOMBRE_COMPANIA": "Soluciones Digitales S.A.",
+    "EMPLEO_PRINCIPAL": "No",
+    "CARGO_OFICIO": "Desarrollador web",
+    "CODIGO_CIIU": "6201",
+    "DESCRIPCION_CIIU": "Desarrollo de software",
+    "RELACION_LABORAL": "Contratista",
+    "VINCULO_LABORAL": "Prestación de servicios",
+    "ESTADO_LABORAL": "Activo",
+    "TIPO_CONTRATO": "Temporal",
+    "TIPO_SALARIO": "Variable",
+    "SALARIO": 4500000,
+    "FRECUENCIA_PAGO": "Mensual",
+    "FORMA_PAGO": "Consignación"
+  },
+  {
+    "ID": 2,
+    "usuario_id": 2,
+    "IDENTIFICACION_COMPANIA": "901223344",
+    "NOMBRE_COMPANIA": "Educación Futuro",
+    "EMPLEO_PRINCIPAL": "Sí",
+    "CARGO_OFICIO": "Docente",
+    "CODIGO_CIIU": "8521",
+    "DESCRIPCION_CIIU": "Educación preescolar y básica primaria",
+    "RELACION_LABORAL": "Empleado público",
+    "VINCULO_LABORAL": "Carrera administrativa",
+    "ESTADO_LABORAL": "Inactivo",
+    "TIPO_CONTRATO": "Provisional",
+    "TIPO_SALARIO": "Fijo",
+    "SALARIO": 2800000,
+    "FRECUENCIA_PAGO": "Quincenal",
+    "FORMA_PAGO": "Cheque"
+  },
+  {
+    "ID": 3,
+    "usuario_id": 3,
+    "IDENTIFICACION_COMPANIA": "802345678",
+    "NOMBRE_COMPANIA": "Independiente",
+    "EMPLEO_PRINCIPAL": "Sí",
+    "CARGO_OFICIO": "Diseñador gráfico",
+    "RELACION_LABORAL": "Independiente",
+    "ESTADO_LABORAL": "Activo",
+    "TIPO_CONTRATO": "N/A",
+    "TIPO_SALARIO": "Variable",
+    "SALARIO": 2000000,
+    "FRECUENCIA_PAGO": "Mensual",
+    "FORMA_PAGO": "Efectivo"
+  },
+  {
+    "ID": 4,
+    "usuario_id": 4,
+    "IDENTIFICACION_COMPANIA": "800987654",
+    "NOMBRE_COMPANIA": "Soluciones Digitales S.A.",
+    "EMPLEO_PRINCIPAL": "No",
+    "CARGO_OFICIO": "Desarrollador web",
+    "CODIGO_CIIU": "6201",
+    "DESCRIPCION_CIIU": "Desarrollo de software",
+    "RELACION_LABORAL": "Contratista",
+    "VINCULO_LABORAL": "Prestación de servicios",
+    "ESTADO_LABORAL": "Activo",
+    "TIPO_CONTRATO": "Temporal",
+    "TIPO_SALARIO": "Variable",
+    "SALARIO": 4500000,
+    "FRECUENCIA_PAGO": "Mensual",
+    "FORMA_PAGO": "Consignación"
+  },
+]
+
+export const mockFinanzas: FinanzasPersonales[] = [
+{
+    "ID": 0,
+    "usuario_id": 101,
+    "DESCRIPCION_OTROS_INGRESOS": "Ventas por catálogo",
+    "INGRESOS_OTROS": 500000,
+    "INGRESOS_ARRIENDOS": 1200000,
+    "INGRESOS_HONORARIOS": 0,
+    "INGRESOS_RENDIMIENTOS": 300000,
+    "ACTIVOS_INMUEBLES": 150000000,
+    "ACTIVOS_INVERSIONES": 20000000,
+    "ACTIVOS_OTROS": 5000000,
+    "ACTIVOS_VEHICULOS": 30000000,
+    "PASIVOS_OTROS": 2000000,
+    "GASTOS_CREDITOS": 800000,
+    "GASTOS_HIPOTECA": 0,
+    "GASTOS_OTROS": 150000,
+    "GASTOS_FAMILIARES": 900000,
+    "GASTOS_ARRENDAMIENTO": 1000000,
+    "APORTES": 250000
+  },
+  {
+    "ID": 1,
+    "usuario_id": 102,
+    "DESCRIPCION_OTROS_INGRESOS": "Clases particulares",
+    "INGRESOS_OTROS": 300000,
+    "INGRESOS_ARRIENDOS": 0,
+    "INGRESOS_HONORARIOS": 1800000,
+    "INGRESOS_RENDIMIENTOS": 100000,
+    "ACTIVOS_INMUEBLES": 90000000,
+    "ACTIVOS_INVERSIONES": 10000000,
+    "ACTIVOS_OTROS": 2000000,
+    "ACTIVOS_VEHICULOS": 25000000,
+    "PASIVOS_OTROS": 5000000,
+    "GASTOS_CREDITOS": 1000000,
+    "GASTOS_HIPOTECA": 600000,
+    "GASTOS_OTROS": 200000,
+    "GASTOS_FAMILIARES": 700000,
+    "GASTOS_ARRENDAMIENTO": 0,
+    "APORTES": 180000
+  },
+  {
+    "ID": 2,
+    "usuario_id": 103,
+    "DESCRIPCION_OTROS_INGRESOS": "Venta de comida",
+    "INGRESOS_OTROS": 400000,
+    "INGRESOS_ARRIENDOS": 0,
+    "INGRESOS_HONORARIOS": 0,
+    "INGRESOS_RENDIMIENTOS": 50000,
+    "ACTIVOS_INMUEBLES": 60000000,
+    "ACTIVOS_INVERSIONES": 0,
+    "ACTIVOS_OTROS": 1000000,
+    "ACTIVOS_VEHICULOS": 10000000,
+    "PASIVOS_OTROS": 1000000,
+    "GASTOS_CREDITOS": 300000,
+    "GASTOS_HIPOTECA": 0,
+    "GASTOS_OTROS": 120000,
+    "GASTOS_FAMILIARES": 400000,
+    "GASTOS_ARRENDAMIENTO": 700000,
+    "APORTES": 100000
+  },
+  {
+    "ID": 3,
+    "usuario_id": 104,
+    "DESCRIPCION_OTROS_INGRESOS": "Freelance diseño gráfico",
+    "INGRESOS_OTROS": 600000,
+    "INGRESOS_ARRIENDOS": 0,
+    "INGRESOS_HONORARIOS": 0,
+    "INGRESOS_RENDIMIENTOS": 0,
+    "ACTIVOS_INMUEBLES": 0,
+    "ACTIVOS_INVERSIONES": 5000000,
+    "ACTIVOS_OTROS": 0,
+    "ACTIVOS_VEHICULOS": 20000000,
+    "PASIVOS_OTROS": 3000000,
+    "GASTOS_CREDITOS": 500000,
+    "GASTOS_HIPOTECA": 0,
+    "GASTOS_OTROS": 150000,
+    "GASTOS_FAMILIARES": 350000,
+    "GASTOS_ARRENDAMIENTO": 850000,
+    "APORTES": 150000
+  },
+  {
+    "ID": 4,
+    "usuario_id": 105,
+    "DESCRIPCION_OTROS_INGRESOS": "Alquiler de equipo",
+    "INGRESOS_OTROS": 200000,
+    "INGRESOS_ARRIENDOS": 600000,
+    "INGRESOS_HONORARIOS": 0,
+    "INGRESOS_RENDIMIENTOS": 150000,
+    "ACTIVOS_INMUEBLES": 80000000,
+    "ACTIVOS_INVERSIONES": 15000000,
+    "ACTIVOS_OTROS": 3000000,
+    "ACTIVOS_VEHICULOS": 18000000,
+    "PASIVOS_OTROS": 4000000,
+    "GASTOS_CREDITOS": 700000,
+    "GASTOS_HIPOTECA": 500000,
+    "GASTOS_OTROS": 100000,
+    "GASTOS_FAMILIARES": 600000,
+    "GASTOS_ARRENDAMIENTO": 0,
+    "APORTES": 200000
+  }
 ]
 
 export const mockTarjetas: TarjetaCredito[] = [
   {
-    ID:                  1,
-    usuario_id:          1,
-    credito_usuario_id:  1,
-    TARJCREDCUPROT:      "123456789",
-    ENTOTORGARANT:       "Banco de Bogotá",
+    ID: 0,
+    usuario_id: 0,
+    credito_usuario_id: 0,
+    TARJCREDCUPROT: "123456789",
+    ENTOTORGARANT: "Banco de Bogotá",
   }
 ]

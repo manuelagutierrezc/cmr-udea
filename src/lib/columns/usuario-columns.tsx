@@ -1,16 +1,11 @@
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
-
+// Column creation helper
+import {makeColumn} from "@/lib/column-helpers"
+// This type is used to define the shape of our data.
+import { Usuario } from "@/lib/types/models"
 // Imports for the actions column.
 import { Search } from "lucide-react"
 import { Button } from "@/components/ui/button" 
-
-// Column creation helper
-import {makeColumn} from "@/lib/column-helpers"
-
-// This type is used to define the shape of our data.
-import { Usuario } from "@/lib/types/models"
 
 // This defines the columns of the table.
 export const UsuarioColumns: ColumnDef<Usuario>[] = [
@@ -25,7 +20,7 @@ export const UsuarioColumns: ColumnDef<Usuario>[] = [
           variant="ghost"
           className="h-8 w-8 p-0"
           onClick={() => {
-              window.open(`/empleado/asociados/consultar/${id}`, "_blank")
+              window.open(`/empleado/asociados/${id}`, "_blank")
             }}
         >
           <span className="sr-only">Abrir menu</span>

@@ -1,20 +1,11 @@
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
-
 // Column creation helper
 import {makeColumn} from "@/lib/column-helpers"
-
 // This type is used to define the shape of our data.
 import { FinanzasPersonales } from "@/lib/types/models"
 
 // This defines the columns of the table.
 export const FinanzasPersonalesColumns: ColumnDef<FinanzasPersonales>[] = [
-    makeColumn<FinanzasPersonales>({
-        key: "ID",
-        label: "ID",
-        type: "number",
-    }),
     makeColumn<FinanzasPersonales>({
         key: "DESCRIPCION_OTROS_INGRESOS",
         label: "Descripción de otros ingresos",

@@ -100,7 +100,7 @@ export type Garantia = {
     Contingencia?:        number;
 }
 
-export type reingresos_usuario = {
+export type ReingresosUsuario = {
     ID:               number;
     usuario_id:       number;
     FECHA_REINGRESO?: Date;

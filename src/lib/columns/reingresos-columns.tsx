@@ -4,6 +4,7 @@ import { ReingresosUsuario } from "@/lib/types/models"
 // Column creation helper
 import { makeColumn } from "@/lib/column-helpers"
 
+// This defines the columns of the table.
 export const ReingresosColumns: ColumnDef<ReingresosUsuario>[] = [
     makeColumn<ReingresosUsuario>({
         key: "FECHA_REINGRESO",

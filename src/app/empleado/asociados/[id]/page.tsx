@@ -13,14 +13,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 //Data display imports.
 import { DataCard } from "@/components/data-card"
-import { Usuario, DireccionUsuario, Empleo, FinanzasPersonales, ReingresosUsuario} from "@/lib/types/models"
+import { DataTable } from "@/components/data-table"
+import { Usuario, CreditoPrestamo, DireccionUsuario, Empleo, FinanzasPersonales, ReingresosUsuario} from "@/lib/types/models"
+import { CreditoPrestamoColumns } from "@/lib/columns/credito-prestamo-columns"
 import { DireccionColumns } from "@/lib/columns/direccion-columns"
 import { EmpleoColumns } from "@/lib/columns/empleo-columns"
 import { FinanzasPersonalesColumns } from "@/lib/columns/finanzas-columns"
 import { ReingresosColumns } from "@/lib/columns/reingresos-columns"
 
 // Mock data for testing purposes.
-import { mockUsuario, mockDireccionUsuario, mockEmpleo, mockFinanzas, mockReingresosUsuario } from "../mock-data" 
+import { mockUsuario, mockCreditoPrestamo, mockDireccionUsuario, mockEmpleo, mockFinanzas, mockReingresosUsuario } from "../mock-data" 
 
 import { Capitalize } from "@/lib/utils"
 
@@ -33,6 +35,7 @@ export default function DetallesAsociado() {
     const id = params.id
 
     const [asociadoData, setAsociadoData] = useState<Usuario>();
+    const [creditoPrestamoData, setCreditoPrestamoData] = useState<CreditoPrestamo[]>([]);
     const [direccionData, setDireccionData] = useState<DireccionUsuario[]>([]);
     const [empleoData, setEmpleoData] = useState<Empleo[]>([]);
     const [finanzasData, setFinanzasData] = useState<FinanzasPersonales[]>([]);
@@ -42,6 +45,11 @@ export default function DetallesAsociado() {
         async function getAsociado(): Promise<Usuario> {
             // Fetch data from API here.
             return mockUsuario[id as unknown as number]; // Mock data for testing purposes, using id to get an element for demonstration only.
+        }
+
+        async function getCreditoPrestamo(): Promise<CreditoPrestamo[]> {
+            // Fetch data from API here.
+            return mockCreditoPrestamo; // Mock data for testing purposes
         }
     
         async function getDireccionUsuario(): Promise<DireccionUsuario[]> {
@@ -67,6 +75,8 @@ export default function DetallesAsociado() {
         async function onInit() {
             const asociadoData = await getAsociado();
             setAsociadoData(asociadoData);
+            const creditoPrestamoData = await getCreditoPrestamo();
+            setCreditoPrestamoData(creditoPrestamoData);
             const direccionData = await getDireccionUsuario();
             setDireccionData(direccionData);
             const empleoData = await getEmpleo();
@@ -135,7 +145,10 @@ export default function DetallesAsociado() {
                             />
                         </TabsContent>
                         <TabsContent value="creditos">
-                            Créditos
+                            <DataTable
+                                columns={CreditoPrestamoColumns}
+                                data={creditoPrestamoData}
+                            />
                         </TabsContent>
                     </Tabs>
                 </div>

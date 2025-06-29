@@ -4,6 +4,7 @@ import { DireccionUsuario } from "@/lib/types/models"
 // Column creation helper
 import { makeColumn } from "@/lib/column-helpers"
 
+// This defines the columns of the table.
 export const DireccionColumns: ColumnDef<DireccionUsuario>[] = [
     makeColumn<DireccionUsuario>({
         key: "TIPO_ZONA",

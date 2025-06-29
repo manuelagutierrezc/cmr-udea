@@ -32,7 +32,7 @@ export function DataCard<TData, TValue>({ columns, data, title }: DataCardProps<
     }
 
     return (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-2">
+        <div className={`${dataArray.length === 1 ? "max-w-lg" : "grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-2"}`}>
             {dataArray.map((entry, index) => (
                 <Card key={index}>
                 {title && (

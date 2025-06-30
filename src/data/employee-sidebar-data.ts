@@ -21,7 +21,7 @@ export const employeeSidebarData = {
     },
     {
       title: "Asociados",
-      url: "/empleado/asociados/consultar",
+      url: "/empleado/asociados",
       icon: IconUsers,
     },
     {

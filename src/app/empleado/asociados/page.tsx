@@ -12,8 +12,8 @@ import { employeeSidebarData } from "@/data/employee-sidebar-data"
 //Data table imports.
 import { UsuarioColumns } from "@/lib/columns/usuario-columns"
 import { Usuario } from "@/lib/types/models"
-import { DataTable } from "@/components/data-table"
-import { mockUsuario } from "./mock-data" // Mock data for testing purposes.
+import { DataTable } from "@/components/data-table/data-table"
+import { mockUsuario } from "@/data/mock/asociados-mock" // Mock data for testing purposes.
 
 import { useEffect, useState } from "react"
 
@@ -50,7 +50,13 @@ export default function ConsultarAsociados() {
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               <div className="px-4 lg:px-6">
                 <h1 className="text-xl font-medium py-4">Consultar Asociados</h1>
-                <DataTable columns={UsuarioColumns} data={data} />
+                <DataTable
+                  columns={UsuarioColumns}
+                  data={data}
+                  filterableColumns={[
+                    { id: "ESTADO", title: "Estado" },
+                  ]}
+                />
               </div>
             </div>
           </div>

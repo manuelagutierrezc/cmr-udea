@@ -5,16 +5,24 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Row } from "@tanstack/react-table"
 
 // Predefined header with a dropdown menu for sorting
-import { DataTableColumnHeader } from "@/components/data-table-column-header"
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 
 import { FilterFn } from "@tanstack/react-table"
+import { Capitalize } from "@/lib/utils"
 
 export type ColumnType = "string" | "number" | "boolean" | "date"
 
 const defaultFilterFns: Record<ColumnType, FilterFn<unknown>> = {
   string: (row, columnId, filterValue) => {
-    const cell = row.getValue(columnId) as string
-    return cell?.toLowerCase().includes((filterValue as string).toLowerCase())
+    const cell = String(row.getValue(columnId) ?? "").toLowerCase()
+
+    if (Array.isArray(filterValue)) {
+      return filterValue.some((v) =>
+        cell.includes(String(v).toLowerCase())
+      )
+    }
+
+    return cell.includes(String(filterValue).toLowerCase())
   },
   number: (row, columnId, filterValue) => {
     const value = String(row.getValue<number>(columnId));
@@ -79,5 +87,6 @@ export function makeColumn<TData, TValue = unknown>(
         }
       }),
     filterFn: options.filterFn ?? (defaultFilterFns[(type)] as FilterFn<TData>),
+    enableColumnFilter: true,
   }
 }

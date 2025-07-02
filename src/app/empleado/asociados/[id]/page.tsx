@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 //Data display imports.
 import { DataCard } from "@/components/data-card"
-import { DataTable } from "@/components/data-table"
+import { DataTable } from "@/components/data-table/data-table"
 import { Usuario, CreditoPrestamo, DireccionUsuario, Empleo, FinanzasPersonales, ReingresosUsuario} from "@/lib/types/models"
 import { CreditoPrestamoColumns } from "@/lib/columns/credito-prestamo-columns"
 import { DireccionColumns } from "@/lib/columns/direccion-columns"
@@ -22,7 +22,7 @@ import { FinanzasPersonalesColumns } from "@/lib/columns/finanzas-columns"
 import { ReingresosColumns } from "@/lib/columns/reingresos-columns"
 
 // Mock data for testing purposes.
-import { mockUsuario, mockCreditoPrestamo, mockDireccionUsuario, mockEmpleo, mockFinanzas, mockReingresosUsuario } from "../mock-data" 
+import { mockUsuario, mockCreditoPrestamo, mockDireccionUsuario, mockEmpleo, mockFinanzas, mockReingresosUsuario } from "@/data/mock/asociados-mock"
 
 import { Capitalize } from "@/lib/utils"
 

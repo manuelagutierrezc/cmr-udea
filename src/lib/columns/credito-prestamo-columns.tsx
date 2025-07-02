@@ -22,7 +22,7 @@ import { TarjetaCreditoColumns } from "./tarjeta-credito-columns"
 import { GarantiaColumns } from "./garantia-columns"
 
 // Mock data for testing purposes.
-import { mockCreditoUsuario, mockTarjetaCredito, mockGarantia } from "@/app/empleado/asociados/mock-data"
+import { mockCreditoUsuario, mockTarjetaCredito, mockGarantia } from "@/data/mock/asociados-mock"
 
 function TableDropDown({ id }: { id: number }) {
     const [openDetalles, setOpenDetalles] = useState(false)

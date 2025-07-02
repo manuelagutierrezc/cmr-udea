@@ -62,7 +62,7 @@ export default function PQRSCliente() {
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               <div className="px-4 lg:px-6">
-                <h1 className="text-xl font-medium py-4">Crear o consultar PQRS</h1>
+                <h1 className="text-xl font-medium py-4">Crear y Consultar PQRS</h1>
                 <Tabs defaultValue="crear">
                   <TabsList>
                       <TabsTrigger value="crear">Crear</TabsTrigger>
@@ -72,7 +72,13 @@ export default function PQRSCliente() {
                     <PqrsForm onSubmit={handlePqrsSubmit} />
                   </TabsContent>
                   <TabsContent value="consultar">
-                    <DataTable columns={PqrsColumns} data={data} />
+                  <DataTable
+                    columns={PqrsColumns}
+                    data={data}
+                    filterableColumns={[
+                      { id: "estado", title: "Estado" },
+                    ]}
+                  />
                   </TabsContent>
                 </Tabs>
               </div>

@@ -81,7 +81,7 @@ export function makeColumn<TData, TValue = unknown>(
           }
           case "boolean": return value ? "Sí" : "No";
           case "number": return (value as number).toString();
-          case "string": return Capitalize(String(value));
+          case "string": return value;
           default:
             return value as React.ReactNode;
         }

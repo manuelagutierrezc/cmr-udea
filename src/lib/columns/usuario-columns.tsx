@@ -107,8 +107,7 @@ export const UsuarioColumns: ColumnDef<Usuario>[] = [
   makeColumn<Usuario>({
     key: "ESTADO",
     label: "Estado",
-    type: "boolean",
-    cell: ({ row }) => (row.getValue("ESTADO") ? "Activo" : "Inactivo"),
+    type: "string",
   }),
   makeColumn<Usuario>({
     key: "PAIS_NACIMIENTO",

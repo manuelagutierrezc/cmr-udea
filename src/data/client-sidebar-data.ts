@@ -24,7 +24,7 @@ export const clientSidebarData = {
     },
     {
       title: "PQRS",
-      url: "/cliente/pqrs/consultar",
+      url: "/cliente/pqrs",
       icon: IconForms,
     },
   ],

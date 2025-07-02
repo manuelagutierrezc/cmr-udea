@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 //Data display imports.
 import { DataCard } from "@/components/data-card"
-import { DataTable } from "@/components/data-table"
+import { DataTable } from "@/components/data-table/data-table"
 import { Usuario, CreditoPrestamo, DireccionUsuario, Empleo, FinanzasPersonales, ReingresosUsuario} from "@/lib/types/models"
 import { CreditoPrestamoColumns } from "@/lib/columns/credito-prestamo-columns"
 import { DireccionColumns } from "@/lib/columns/direccion-columns"

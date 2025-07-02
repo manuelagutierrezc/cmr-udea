@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react" // For sorting.
- 
+
 import {
   ColumnDef,
   flexRender,
@@ -11,9 +11,11 @@ import {
   getSortedRowModel, // For sorting.
   ColumnFiltersState, // For filtering.
   getFilteredRowModel, // For filtering.
+  getFacetedRowModel, // For column filtering.
+  getFacetedUniqueValues, // For column filtering.
   useReactTable,
 } from "@tanstack/react-table"
- 
+
 import {
   Table,
   TableBody,
@@ -36,17 +38,24 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 
-import { DataTableViewOptions } from "@/components/data-table-view-options"
+import { DataTableColumnFilter } from "@/components/data-table/data-table-column-filter"
 
- 
+import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
+
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  filterableColumns?: {
+    id: string
+    title?: string
+  }[]
 }
- 
+
 export function DataTable<TData, TValue>({
   columns,
   data,
+  filterableColumns
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]) // For sorting.
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>( // For filtering.
@@ -66,49 +75,67 @@ export function DataTable<TData, TValue>({
     // For filtering.
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    // For column filtering.
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
     state: {
       sorting,
       columnFilters,
     }
   })
- 
+
   return (
     <div>
-      <div className="flex items-center py-4">
-        {/* Dropdown menu for filtering options. */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="flex items-center">
-              <ListFilter className="h-4 w-4 mr-2" />
-              <p className="mx-2">Filtrar por:</p>
-              <Button variant="outline" className="mx-2">
-                {table.getColumn(filterColumn)?.columnDef.meta?.label ?? filterColumn}
-              </Button>
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((col) => col.getCanFilter())
-              .map((col) => (
-                <DropdownMenuItem
-                  key={col.id}
-                  onClick={() => setFilterColumn(col.id)}
-                >
-                  {col.columnDef.meta?.label ?? col.id}
-                </DropdownMenuItem>
-              ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        {/* Input for filtering. */}
-        <Input
-          placeholder="Filtrar..."
-          value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm mx-2"
-        />
+      <div className="flex flex-wrap py-4">
+        <div className="flex flex-wrap gap-2 max-w-10/12">
+          <div className="inline-flex items-center">
+            {/* Dropdown menu for filtering options. */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="flex items-center">
+                  <ListFilter className="h-4 w-4" />
+                  <p className="mx-2 whitespace-nowrap">Filtrar por:</p>
+                  <Button variant="outline" className="mx-2">
+                    {table.getColumn(filterColumn)?.columnDef.meta?.label ?? filterColumn}
+                  </Button>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((col) => col.getCanFilter())
+                  .map((col) => (
+                    <DropdownMenuItem
+                      key={col.id}
+                      onClick={() => setFilterColumn(col.id)}
+                    >
+                      {col.columnDef.meta?.label ?? col.id}
+                    </DropdownMenuItem>
+                  ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {/* Input for filtering. */}
+            <Input
+              placeholder="Filtrar..."
+              value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
+              onChange={(event) =>
+                table.getColumn(filterColumn)?.setFilterValue(event.target.value)
+              }
+              className="max-w-xs"
+            />
+          </div>
+          {/* Specific columns filtering options. */}
+          {filterableColumns && filterableColumns.length > 0 && (
+            <>
+              {filterableColumns.map(({ id, title }) => {
+                const column = table.getColumn(id)
+                return column ? (
+                  <DataTableColumnFilter key={id} column={column} title={title} />
+                ) : null
+              })}
+            </>
+          )}
+        </div>
         {/* Component for column visibility options. */}
         <DataTableViewOptions table={table} />
       </div>

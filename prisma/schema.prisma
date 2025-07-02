@@ -62,6 +62,7 @@ model usuario {
   finanzas_personales  finanzas_personales[]
   usuario_rol          usuario_rol[]
   pqr                  pqr[]
+  datacredito datacredito[]
 }
 
 model credito_usuario {
@@ -264,4 +265,13 @@ model pqr {
   updatedAt               DateTime? 
 
   usuario   usuario   @relation(fields: [usuario_id], references: [ID])
+}
+
+model datacredito {
+  ID          Int      @id @default(autoincrement())
+  usuario_id  Int
+  xml_data    String
+  createdAt   DateTime @default(now())
+
+  usuario     usuario  @relation(fields: [usuario_id], references: [ID])
 }

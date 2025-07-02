@@ -13,7 +13,7 @@ import { employeeSidebarData } from "@/data/employee-sidebar-data"
 import { UsuarioColumns } from "@/lib/columns/usuario-columns"
 import { Usuario } from "@/lib/types/models"
 import { DataTable } from "@/components/data-table"
-import { mockUsuario } from "./mock-data" // Mock data for testing purposes.
+import { mockUsuario } from "@/data/mock/asociados" // Mock data for testing purposes.
 
 import { useEffect, useState } from "react"
 

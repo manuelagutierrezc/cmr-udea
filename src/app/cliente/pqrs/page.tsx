@@ -12,13 +12,14 @@ import { clientSidebarData } from "@/data/client-sidebar-data"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 // Form imports.
-import { PqrsForm, PqrsFormData } from "@/components/pqrs-form"
+import { PqrsForm } from "@/components/pqrs-form"
+import { PqrsFormData } from "@/lib/schemas/pqrs-schema"
 
 //Data table imports.
 import { PqrsColumns } from "@/lib/columns/pqrs-columns"
 import { pqr } from "@/lib/types/models"
 import { DataTable } from "@/components/data-table"
-import { mockPqrs } from "@/data/mock/pqrs" // Mock data for testing purposes.
+import { mockPqrs } from "@/data/mock/pqrs-mock" // Mock data for testing purposes.
 
 import { useEffect, useState } from "react"
 

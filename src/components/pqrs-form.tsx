@@ -1,85 +1,46 @@
 "use client"
 
-import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { pqrsSchema, PqrsFormData } from "@/lib/schemas/pqrs-schema"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle
-} from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Trash, Send } from "lucide-react"
-
-export type PqrsFormData = {
-    nombre: string
-    tipoIdentificacion: string
-    documentoIdentificacion: string
-    email: string
-    tipoSolicitante: string
-    pais: string
-    provincia: string
-    ciudad: string
-    medioContacto: string
-    telefono: string
-    movil: string
-    direccion: string
-    tipoSolicitud: string
-    servicio: string
-    titulo: string
-    descripcion: string
-    adjunto?: File | null
-}
 
 interface PqrsFormProps {
     onSubmit: (data: PqrsFormData) => void
 }
 
 export function PqrsForm({ onSubmit }: PqrsFormProps) {
-    const [formData, setFormData] = useState<PqrsFormData>({
-        nombre: "",
-        tipoIdentificacion: "",
-        documentoIdentificacion: "",
-        email: "",
-        tipoSolicitante: "",
-        pais: "",
-        provincia: "",
-        ciudad: "",
-        medioContacto: "",
-        telefono: "",
-        movil: "",
-        direccion: "",
-        tipoSolicitud: "",
-        servicio: "",
-        titulo: "",
-        descripcion: "",
-        adjunto: null,
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<PqrsFormData>({
+        resolver: zodResolver(pqrsSchema),
+        defaultValues: {
+            nombre: "",
+            tipoIdentificacion: "",
+            documentoIdentificacion: "",
+            email: "",
+            tipoSolicitante: "",
+            pais: "",
+            provincia: "",
+            ciudad: "",
+            medioContacto: "",
+            telefono: "",
+            movil: "",
+            direccion: "",
+            tipoSolicitud: "",
+            servicio: "",
+            titulo: "",
+            descripcion: "",
+            adjunto: null,
+        }
     })
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        const { name, value } = e.target
-        setFormData((prev) => ({ ...prev, [name]: value }))
-    }
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData((prev) => ({
-        ...prev,
-        adjunto: e.target.files?.[0] || null
-        }))
-    }
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        onSubmit(formData)
-    }
-
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Card 1: Información del usuario */}
         <Card>
             <CardHeader>
@@ -87,12 +48,13 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
             </CardHeader>
             <CardContent className="grid gap-4">
             <div className="flex flex-col space-y-2">
-                <Label>Nombre:</Label>
-                <Input name="nombre" value={formData.nombre} onChange={handleChange} />
+                <Label>Nombre:<span className="text-accent-foreground">*</span></Label>
+                <Input {...register("nombre")} />
+                {errors.nombre && <p className="text-sm text-red-500">{errors.nombre.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Tipo de identificación:</Label>
-                <Select onValueChange={(val) => setFormData((f) => ({ ...f, tipoIdentificacion: val }))}>
+                <Label>Tipo de identificación:<span className="text-accent-foreground">*</span></Label>
+                <Select onValueChange={(val: string) => setValue("tipoIdentificacion", val)}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -101,18 +63,21 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
                     <SelectItem value="CE">Cédula extranjera</SelectItem>
                 </SelectContent>
                 </Select>
+                {errors.tipoIdentificacion && <p className="text-sm text-red-500">{errors.tipoIdentificacion.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Número de identificación:</Label>
-                <Input name="documentoIdentificacion" value={formData.documentoIdentificacion} onChange={handleChange} />
+                <Label>Número de identificación:<span className="text-accent-foreground">*</span></Label>
+                <Input {...register("documentoIdentificacion")} />
+                {errors.documentoIdentificacion && <p className="text-sm text-red-500">{errors.documentoIdentificacion.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Correo electrónico:</Label>
-                <Input name="email" type="email" value={formData.email} onChange={handleChange} />
+                <Label>Correo electrónico:<span className="text-accent-foreground">*</span></Label>
+                <Input {...register("email")} />
+                {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Tipo de solicitante:</Label>
-                <Select onValueChange={(val) => setFormData((f) => ({ ...f, tipoSolicitante: val }))}>
+                <Label>Tipo de solicitante:<span className="text-accent-foreground">*</span></Label>
+                <Select onValueChange={(val: string) => setValue("tipoSolicitante", val)}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -121,10 +86,11 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
                     <SelectItem value="Externo">Externo</SelectItem>
                 </SelectContent>
                 </Select>
+                {errors.tipoSolicitante && <p className="text-sm text-red-500">{errors.tipoSolicitante.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>País:</Label>
-                <Select onValueChange={(val) => setFormData((f) => ({ ...f, pais: val }))}>
+                <Label>País:<span className="text-accent-foreground">*</span></Label>
+                <Select onValueChange={(val: string) => setValue("pais", val)}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -132,10 +98,11 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
                     <SelectItem value="Colombia">Colombia</SelectItem>
                 </SelectContent>
                 </Select>
+                {errors.pais && <p className="text-sm text-red-500">{errors.pais.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Departamento:</Label>
-                <Select onValueChange={(val) => setFormData((f) => ({ ...f, provincia: val }))}>
+                <Label>Departamento:<span className="text-accent-foreground">*</span></Label>
+                <Select onValueChange={(val: string) => setValue("tipoIdentificacion", val)}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -144,10 +111,11 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
                     <SelectItem value="Cundinamarca">Cundinamarca</SelectItem>
                 </SelectContent>
                 </Select>
+                {errors.provincia && <p className="text-sm text-red-500">{errors.provincia.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Ciudad:</Label>
-                <Select onValueChange={(val) => setFormData((f) => ({ ...f, ciudad: val }))}>
+                <Label>Ciudad:<span className="text-accent-foreground">*</span></Label>
+                <Select onValueChange={(val: string) => setValue("ciudad", val)}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -156,10 +124,11 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
                     <SelectItem value="Bogotá">Bogotá</SelectItem>
                 </SelectContent>
                 </Select>
+                {errors.ciudad && <p className="text-sm text-red-500">{errors.ciudad.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>Medio de contacto preferido:</Label>
-                <Select onValueChange={(val) => setFormData((f) => ({ ...f, medioContacto: val }))}>
+                <Select onValueChange={(val: string) => setValue("medioContacto", val)}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -171,15 +140,17 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>Número de teléfono fijo:</Label>
-                <Input name="telefono" value={formData.telefono} onChange={handleChange} />
+                <Input {...register("telefono")} />
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Número de teléfono móvil:</Label>
-                <Input name="movil" value={formData.movil} onChange={handleChange} />
+                <Label>Número de teléfono móvil:<span className="text-accent-foreground">*</span></Label>
+                <Input {...register("movil")} />
+                {errors.movil && <p className="text-sm text-red-500">{errors.movil.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Dirección:</Label>
-                <Input name="direccion" value={formData.direccion} onChange={handleChange} />
+                <Label>Dirección:<span className="text-accent-foreground">*</span></Label>
+                <Input {...register("direccion")} />
+                {errors.direccion && <p className="text-sm text-red-500">{errors.direccion.message}</p>}
             </div>
             </CardContent>
         </Card>
@@ -191,8 +162,8 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
             </CardHeader>
             <CardContent className="grid gap-4">
             <div className="flex flex-col space-y-2">
-                <Label>Tipo de solicitud:</Label>
-                <Select onValueChange={(val) => setFormData((f) => ({ ...f, tipoSolicitud: val }))}>
+                <Label>Tipo de solicitud:<span className="text-accent-foreground">*</span></Label>
+                <Select onValueChange={(val: string) => setValue("tipoSolicitud", val)}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -203,10 +174,11 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
                     <SelectItem value="Sugerencia">Sugerencia</SelectItem>
                 </SelectContent>
                 </Select>
+                {errors.tipoSolicitud && <p className="text-sm text-red-500">{errors.tipoSolicitud.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Servicio:</Label>
-                <Select onValueChange={(val) => setFormData((f) => ({ ...f, servicio: val }))}>
+                <Label>Servicio:<span className="text-accent-foreground">*</span></Label>
+                <Select onValueChange={(val: string) => setValue("servicio", val)}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -215,18 +187,29 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
                     <SelectItem value="Ahorros">Ahorros</SelectItem>
                 </SelectContent>
                 </Select>
+                {errors.servicio && <p className="text-sm text-red-500">{errors.servicio.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Título:</Label>
-                <Input name="titulo" value={formData.titulo} onChange={handleChange} />
+                <Label>Título:<span className="text-accent-foreground">*</span></Label>
+                <Input {...register("titulo")} />
+                {errors.titulo && <p className="text-sm text-red-500">{errors.titulo.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
-                <Label>Cuéntanos sobre tu solicitud:</Label>
-                <Textarea name="descripcion" value={formData.descripcion} onChange={handleChange} />
+                <Label>Cuéntanos sobre tu solicitud:<span className="text-accent-foreground">*</span></Label>
+                <Textarea {...register("descripcion")} />
+                {errors.descripcion && <p className="text-sm text-red-500">{errors.descripcion.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>Adjuntar archivo:</Label>
-                <Input type="file" onChange={handleFileChange} />
+                <Input
+                    type="file"
+                    onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                        setValue("adjunto", file);
+                        }
+                    }}
+                />
             </div>
             </CardContent>
         </Card>

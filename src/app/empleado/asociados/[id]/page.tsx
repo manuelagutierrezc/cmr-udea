@@ -22,7 +22,7 @@ import { FinanzasPersonalesColumns } from "@/lib/columns/finanzas-columns"
 import { ReingresosColumns } from "@/lib/columns/reingresos-columns"
 
 // Mock data for testing purposes.
-import { mockUsuario, mockCreditoPrestamo, mockDireccionUsuario, mockEmpleo, mockFinanzas, mockReingresosUsuario } from "@/data/mock/asociados"
+import { mockUsuario, mockCreditoPrestamo, mockDireccionUsuario, mockEmpleo, mockFinanzas, mockReingresosUsuario } from "@/data/mock/asociados-mock"
 
 import { Capitalize } from "@/lib/utils"
 

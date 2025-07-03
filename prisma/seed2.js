@@ -11,6 +11,7 @@ async function main() {
       data: {
         IDENTIFICACION: faker.string.numeric(10),
         TIPO_IDENTIFICACION: 'CC',
+        PASSWORD: 'password',
         PRIMER_NOMBRE: faker.person.firstName(),
         PRIMER_APELLIDO: faker.person.lastName(),
         EDAD: faker.number.int({ min: 18, max: 100 }),

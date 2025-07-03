@@ -12,6 +12,7 @@ model usuario {
   TIPO_IDENTIFICACION   String
   ACTA_INGRESO         String
   IDENTIFICACION       String    @unique
+  PASSWORD             String
   ESTADO_CIVIL         String
   PAIS_NACIMIENTO      String
   RAZONSOCIAL          String

@@ -13,3 +13,5 @@ npm install swagger-ui-react swagger-ui --legacy-peer-deps
 cp node_modules/swagger-ui-dist/swagger-ui.css public/swagger-ui.css
 cp node_modules/swagger-ui-dist/swagger-ui-bundle.js public/swagger-ui-bundle.js
 cp node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js public/swagger-ui-standalone-preset.js
+-faker
+npm install @faker-js/faker

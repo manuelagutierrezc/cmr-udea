@@ -9,10 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.9.0",
     "@prisma/client": "^6.8.2",
     "next": "15.3.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "swagger-ui": "^5.26.0",
+    "swagger-ui-react": "^5.26.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -28,6 +31,6 @@
     "typescript": "^5.8.3"
   },
   "prisma": {
-    "seed": "node prisma2/seed.js"
+    "seed": "node prisma/seed2.js"
   }
 }

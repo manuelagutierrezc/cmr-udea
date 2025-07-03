@@ -19,7 +19,7 @@ model usuario {
   PERSONAS_A_CARGO     Int
   DEPARTAMENTO_NACIMIENTO String
   GENERO               String
-  ADDRESSLINE_MAIL     String
+  ADDRESSLINE_MAIL     String   @unique
   MUNICIPIO_NACIMIENTO String
   PAIS_IDENTIFICACION  String
   DIRECCION_RESIDENCIA String

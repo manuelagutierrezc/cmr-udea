@@ -15,6 +15,59 @@ export default function handler(req, res) {
       },
     ],
     paths: {
+      '/api/auth/login': {
+    post: {
+      tags: ['Autenticación'],
+      summary: 'Login de usuario',
+      description: 'Permite autenticar a un usuario mediante su correo y contraseña.',
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              required: ['ADDRESSLINE_MAIL', 'PASSWORD'],
+              properties: {
+                ADDRESSLINE_MAIL: {
+                  type: 'string',
+                  format: 'email',
+                  example: 'usuario@ejemplo.com'
+                },
+                PASSWORD: {
+                  type: 'string',
+                  example: 'mi_contraseña_segura'
+                }
+              }
+            }
+          }
+        }
+      },
+      responses: {
+        200: {
+          description: 'Autenticación exitosa',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  message: { type: 'string', example: 'Autenticación exitosa' }
+                }
+              }
+            }
+          }
+        },
+        400: {
+          description: 'Faltan credenciales o formato incorrecto'
+        },
+        401: {
+          description: 'Credenciales inválidas'
+        },
+        500: {
+          description: 'Error interno del servidor'
+        }
+      }
+    }
+  },  
       "/api/usuario/{identificacion}": {
         get: {
           tags: ["Usuario"],
@@ -53,6 +106,8 @@ export default function handler(req, res) {
       },
     },
   };
+  
 
   res.status(200).json(swaggerDocument);
 }
+

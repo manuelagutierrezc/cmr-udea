@@ -1,5 +1,3 @@
-// pages/api/swagger-spec.js
-
 export default function handler(req, res) {
   const swaggerDocument = {
     openapi: "3.0.0",
@@ -16,98 +14,370 @@ export default function handler(req, res) {
     ],
     paths: {
       '/api/auth/login': {
-    post: {
-      tags: ['Autenticación'],
-      summary: 'Login de usuario',
-      description: 'Permite autenticar a un usuario mediante su correo y contraseña.',
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              required: ['ADDRESSLINE_MAIL', 'PASSWORD'],
-              properties: {
-                ADDRESSLINE_MAIL: {
-                  type: 'string',
-                  format: 'email',
-                  example: 'usuario@ejemplo.com'
-                },
-                PASSWORD: {
-                  type: 'string',
-                  example: 'mi_contraseña_segura'
-                }
-              }
-            }
-          }
-        }
-      },
-      responses: {
-        200: {
-          description: 'Autenticación exitosa',
-          content: {
-            'application/json': {
-              schema: {
-                type: 'object',
-                properties: {
-                  message: { type: 'string', example: 'Autenticación exitosa' }
-                }
-              }
-            }
-          }
-        },
-        400: {
-          description: 'Faltan credenciales o formato incorrecto'
-        },
-        401: {
-          description: 'Credenciales inválidas'
-        },
-        500: {
-          description: 'Error interno del servidor'
-        }
-      }
-    }
-  },  
-      "/api/usuario/{identificacion}": {
-        get: {
-          tags: ["Usuario"],
-          summary: "Obtener un usuario por IDENTIFICACION",
-          parameters: [
-            {
-              name: "identificacion",
-              in: "path",
-              required: true,
-              schema: {
-                type: "string",
+  post: {
+    tags: ['Autenticación'],
+    summary: 'Inicio de sesión',
+    description: 'Permite autenticar a un usuario usando correo y contraseña.',
+    requestBody: {
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            required: ['ADDRESSLINE_MAIL', 'PASSWORD'],
+            properties: {
+              ADDRESSLINE_MAIL: {
+                type: 'string',
+                format: 'email',
+                example: 'usuario@ejemplo.com',
               },
-              description: "Cédula del usuario",
-            },
-          ],
-          responses: {
-            200: {
-              description: "Usuario encontrado",
-              content: {
-                "application/json": {
-                  example: {
-                    IDENTIFICACION: "123456789",
-                    PRIMER_NOMBRE: "Juan",
-                    PRIMER_APELLIDO: "Pérez",
-                    CLIENTE: true,
-                    EMPLEADO: false,
-                  },
-                },
+              PASSWORD: {
+                type: 'string',
+                example: 'contraseña123',
               },
-            },
-            404: {
-              description: "Usuario no encontrado",
             },
           },
         },
       },
     },
+    responses: {
+      200: {
+        description: 'Autenticación exitosa',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                message: { type: 'string', example: 'Autenticación exitosa' },
+              },
+            },
+          },
+        },
+      },
+      400: {
+        description: 'Faltan credenciales',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                error: { type: 'string', example: 'Faltan credenciales' },
+              },
+            },
+          },
+        },
+      },
+      401: {
+        description: 'Credenciales inválidas',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                error: { type: 'string', example: 'Credenciales inválidas' },
+              },
+            },
+          },
+        },
+      },
+      500: {
+        description: 'Error interno del servidor',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                error: { type: 'string', example: 'Error interno del servidor' },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+},
+
+
+
+
+
+
+      '/api/usuarios/{identificacion}': {
+  get: {
+    tags: ['Usuarios'],
+    summary: 'Obtener un usuario por ID',
+    description: 'Retorna los datos de un usuario específico por su ID.',
+    parameters: [
+      {
+        name: 'identificacion',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'integer'
+        },
+        description: 'ID del usuario a obtener'
+      }
+    ],
+    responses: {
+      200: {
+        description: 'Usuario obtenido correctamente',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/Usuario'
+            }
+          }
+        }
+      },
+      404: {
+        description: 'Usuario no encontrado'
+      },
+      500: {
+        description: 'Error interno del servidor'
+      }
+    }
+  },
+
+  put: {
+    tags: ['Usuarios'],
+    summary: 'Actualizar un usuario por ID',
+    description: 'Actualiza los datos de un usuario específico por su ID.',
+    parameters: [
+      {
+        name: 'identificacion',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'integer'
+        },
+        description: 'ID del usuario a actualizar'
+      }
+    ],
+    requestBody: {
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            $ref: '#/components/schemas/UsuarioInput'
+          }
+        }
+      }
+    },
+    responses: {
+      200: {
+        description: 'Usuario actualizado correctamente',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/Usuario'
+            }
+          }
+        }
+      },
+      400: {
+        description: 'Error de validación de datos'
+      },
+      404: {
+        description: 'Usuario no encontrado'
+      },
+      500: {
+        description: 'Error interno del servidor'
+      }
+    }
+  },
+
+  delete: {
+    tags: ['Usuarios'],
+    summary: 'Eliminar un usuario por ID',
+    description: 'Elimina un usuario específico por su ID.',
+    parameters: [
+      {
+        name: 'identificacion',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'integer'
+        },
+        description: 'ID del usuario a eliminar'
+      }
+    ],
+    responses: {
+      204: {
+        description: 'Usuario eliminado correctamente (sin contenido)'
+      },
+      404: {
+        description: 'Usuario no encontrado'
+      },
+      500: {
+        description: 'Error interno del servidor'
+      }
+    }
+  }
+},
+
+      "/api/usuarios": {
+        get: {
+          tags: ["Usuarios"],
+          summary: "Obtener todos los usuarios",
+          description: "Retorna una lista con todos los usuarios registrados en el sistema.",
+          responses: {
+            200: {
+              description: "Lista de usuarios obtenida correctamente",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: { $ref: "#/components/schemas/Usuario" },
+                  },
+                },
+              },
+            },
+            500: {
+              description: "Error interno al obtener usuarios",
+            },
+          },
+        },
+        post: {
+          tags: ["Usuarios"],
+          summary: "Crear un nuevo usuario",
+          description: "Crea un nuevo usuario con los datos proporcionados en el cuerpo de la solicitud.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/UsuarioInput" },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: "Usuario creado correctamente",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/Usuario" },
+                },
+              },
+            },
+            400: {
+              description: "Error al crear usuario",
+            },
+          },
+        },
+      },
+    },
+    components: {
+      schemas: {
+        Usuario: {
+          type: "object",
+          properties: {
+            ID: { type: "integer" },
+            TIPO_IDENTIFICACION: { type: "string" },
+            ACTA_INGRESO: { type: "string" },
+            IDENTIFICACION: { type: "string" },
+            ESTADO_CIVIL: { type: "string" },
+            PAIS_NACIMIENTO: { type: "string" },
+            RAZONSOCIAL: { type: "string" },
+            PERSONAS_A_CARGO: { type: "integer" },
+            DEPARTAMENTO_NACIMIENTO: { type: "string" },
+            GENERO: { type: "string" },
+            ADDRESSLINE_MAIL: { type: "string", format: "email" },
+            MUNICIPIO_NACIMIENTO: { type: "string" },
+            PAIS_IDENTIFICACION: { type: "string" },
+            DIRECCION_RESIDENCIA: { type: "string" },
+            TIPO_VIVIENDA: { type: "string" },
+            LUGAR_EXPEDICION: { type: "string" },
+            PAIS_RESIDENCIA: { type: "string" },
+            ESTRATO: { type: "integer" },
+            FECHA_NACIMIENTO: { type: "string", format: "date-time" },
+            DEPARTAMENTO_RESIDENCIA: { type: "string" },
+            OCUPACION: { type: "string" },
+            FECHA_INGRESO: { type: "string", format: "date-time" },
+            CIUDAD_RESIDENCIA: { type: "string" },
+            NIVEL_ACADEMICO: { type: "string" },
+            EDAD: { type: "integer" },
+            ADDRESSLINE_CELULAR: { type: "string" },
+            CODIGO_VERIFICACION: { type: "string" },
+            CLIENTE: { type: "boolean" },
+            TERCERO: { type: "boolean" },
+            CODEUCOR_NA: { type: "string" },
+            EMPLEADO: { type: "boolean" },
+            ASOCIADO: { type: "boolean" },
+            PROVEEDOR: { type: "boolean" },
+            PRIMER_NOMBRE: { type: "string" },
+            SEGUNDO_NOMBRE: { type: "string" },
+            PRIMER_APELLIDO: { type: "string" },
+            SEGUNDO_APELLIDO: { type: "string" },
+            SUCURSAL: { type: "string" },
+            ESTADO: { type: "string" },
+            ULTIMA_ACTUALIZACION: { type: "string", format: "date-time" },
+            NACIONALIDAD: { type: "string" },
+            NUMERO_HIJOS: { type: "integer" },
+            MAXIMO_TITULO: { type: "string" },
+            CONYUGUE: { type: "string" }
+          },
+        },
+        UsuarioInput: {
+          type: "object",
+          required: [
+            "TIPO_IDENTIFICACION",
+            "ACTA_INGRESO",
+            "IDENTIFICACION",
+            "PASSWORD",
+            "ESTADO_CIVIL",
+            "PAIS_NACIMIENTO",
+            "ADDRESSLINE_MAIL",
+            "FECHA_NACIMIENTO"
+          ],
+          properties: {
+            TIPO_IDENTIFICACION: { type: "string" },
+            ACTA_INGRESO: { type: "string" },
+            IDENTIFICACION: { type: "string" },
+            PASSWORD: { type: "string", format: "password" },
+            ESTADO_CIVIL: { type: "string" },
+            PAIS_NACIMIENTO: { type: "string" },
+            RAZONSOCIAL: { type: "string" },
+            PERSONAS_A_CARGO: { type: "integer" },
+            DEPARTAMENTO_NACIMIENTO: { type: "string" },
+            GENERO: { type: "string" },
+            ADDRESSLINE_MAIL: { type: "string", format: "email" },
+            MUNICIPIO_NACIMIENTO: { type: "string" },
+            PAIS_IDENTIFICACION: { type: "string" },
+            DIRECCION_RESIDENCIA: { type: "string" },
+            TIPO_VIVIENDA: { type: "string" },
+            LUGAR_EXPEDICION: { type: "string" },
+            PAIS_RESIDENCIA: { type: "string" },
+            ESTRATO: { type: "integer" },
+            FECHA_NACIMIENTO: { type: "string", format: "date-time" },
+            DEPARTAMENTO_RESIDENCIA: { type: "string" },
+            OCUPACION: { type: "string" },
+            FECHA_INGRESO: { type: "string", format: "date-time" },
+            CIUDAD_RESIDENCIA: { type: "string" },
+            NIVEL_ACADEMICO: { type: "string" },
+            EDAD: { type: "integer" },
+            ADDRESSLINE_CELULAR: { type: "string" },
+            CODIGO_VERIFICACION: { type: "string" },
+            CLIENTE: { type: "boolean" },
+            TERCERO: { type: "boolean" },
+            CODEUCOR_NA: { type: "string" },
+            EMPLEADO: { type: "boolean" },
+            ASOCIADO: { type: "boolean" },
+            PROVEEDOR: { type: "boolean" },
+            PRIMER_NOMBRE: { type: "string" },
+            SEGUNDO_NOMBRE: { type: "string" },
+            PRIMER_APELLIDO: { type: "string" },
+            SEGUNDO_APELLIDO: { type: "string" },
+            SUCURSAL: { type: "string" },
+            ESTADO: { type: "string" },
+            ULTIMA_ACTUALIZACION: { type: "string", format: "date-time" },
+            NACIONALIDAD: { type: "string" },
+            NUMERO_HIJOS: { type: "integer" },
+            MAXIMO_TITULO: { type: "string" },
+            CONYUGUE: { type: "string" }
+          }
+        }
+      }
+    }
   };
-  
 
   res.status(200).json(swaggerDocument);
 }
-

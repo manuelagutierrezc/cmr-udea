@@ -36,7 +36,7 @@ model usuario {
   EDAD                 Int
   ADDRESSLINE_CELULAR  String
 
-  CODIGO_VERIFICACION  String?  
+  CODIGO_VERIFICACION  String?
   CLIENTE              Boolean? 
   TERCERO              Boolean? 
   CODEUCOR_NA          String?  
@@ -98,7 +98,7 @@ model credito_usuario {
 
 model credito_prestamo {
   ID                   Int       @id @default(autoincrement())
-  usuario_id           Int
+  usuario_id           String
   credito_usuario_id   Int?      
   clasegarantia        String?   
   destinocredito       String?   
@@ -119,18 +119,18 @@ model credito_prestamo {
   NITPatronal          String?   
   NombrePatronal       String?   
 
-  usuario              usuario    @relation(fields: [usuario_id], references: [ID])
+  usuario              usuario    @relation(fields: [usuario_id], references: [IDENTIFICACION])
   credito_usuario      credito_usuario? @relation(fields: [credito_usuario_id], references: [ID])
 }
 
 model tarjeta_credito {
   ID                   Int       @id @default(autoincrement())
-  usuario_id           Int
+  usuario_id           String
   credito_usuario_id   Int?      
   TARJCREDCUPROT       String?   
   ENTOTORGARANT        String?   
 
-  usuario              usuario    @relation(fields: [usuario_id], references: [ID])
+  usuario              usuario    @relation(fields: [usuario_id], references: [IDENTIFICACION])
   credito_usuario      credito_usuario? @relation(fields: [credito_usuario_id], references: [ID])
 }
 
@@ -157,7 +157,7 @@ model reingresos_usuario {
 
 model direccion_usuario {
   ID                   Int       @id @default(autoincrement())
-  usuario_id           Int
+  usuario_id           String
   TIPO_ZONA            String?   
   DIRECCION_RESIDENCIA  String?   
   DIRECCION_LABORAL    String?   
@@ -180,12 +180,12 @@ model direccion_usuario {
   NRO_CTA_EXT          String?   
   MANEJA_CTA_EN_MONEDA_EXTRANJERA Boolean? 
 
-  usuario              usuario    @relation(fields: [usuario_id], references: [ID])
+  usuario              usuario    @relation(fields: [usuario_id], references: [IDENTIFICACION])
 }
 
 model empleo {
   ID                   Int       @id @default(autoincrement())
-  usuario_id           Int
+  usuario_id           String
   IDENTIFICACION_COMPANIA String?  
   NOMBRE_COMPANIA       String?  
   EMPLEO_PRINCIPAL      String?  
@@ -201,12 +201,12 @@ model empleo {
   FRECUENCIA_PAGO      String?  
   FORMA_PAGO           String?  
 
-  usuario              usuario    @relation(fields: [usuario_id], references: [ID])
+  usuario              usuario    @relation(fields: [usuario_id], references: [IDENTIFICACION])
 }
 
 model finanzas_personales {
   ID                   Int       @id @default(autoincrement())
-  usuario_id           Int
+  usuario_id           String
   DESCRIPCION_OTROS_INGRESOS String?  
   INGRESOS_OTROS       Float?   
   INGRESOS_ARRIENDOS   Float?   
@@ -224,7 +224,7 @@ model finanzas_personales {
   GASTOS_ARRENDAMIENTO Float?   
   APORTES              Float?   
 
-  usuario              usuario    @relation(fields: [usuario_id], references: [ID])
+  usuario              usuario    @relation(fields: [usuario_id], references: [IDENTIFICACION])
 }
 
 model rol {
@@ -245,7 +245,7 @@ model usuario_rol {
 
 model pqr {
   ID                      Int       @id @default(autoincrement())
-  usuario_id              Int 
+  usuario_id              String 
   tipoIdentificacion      String?   
   documentoIdentificacion String?   
   email                   String?   
@@ -265,14 +265,14 @@ model pqr {
   createdAt               DateTime? 
   updatedAt               DateTime? 
 
-  usuario   usuario   @relation(fields: [usuario_id], references: [ID])
+  usuario   usuario   @relation(fields: [usuario_id], references: [IDENTIFICACION])
 }
 
 model datacredito {
   ID          Int      @id @default(autoincrement())
-  usuario_id  Int
+  usuario_id  String
   xml_data    String
   createdAt   DateTime @default(now())
 
-  usuario     usuario  @relation(fields: [usuario_id], references: [ID])
+  usuario     usuario  @relation(fields: [usuario_id], references: [IDENTIFICACION])
 }

@@ -78,7 +78,7 @@ async function main() {
     // Crédito préstamo
     const creditoPrestamo = await prisma.credito_prestamo.create({
       data: {
-        usuario_id: usuario.ID,
+        usuario_id: usuario.IDENTIFICACION,
         credito_usuario_id: creditoUsuario.ID,
         clasegarantia: faker.helpers.arrayElement(['Hipotecaria', 'Prendaria']),
         destinocredito: faker.helpers.arrayElement(['Vivienda', 'Consumo', 'Comercial']),
@@ -104,7 +104,7 @@ async function main() {
     // Tarjeta crédito
     await prisma.tarjeta_credito.create({
       data: {
-        usuario_id: usuario.ID,
+        usuario_id: usuario.IDENTIFICACION,
         credito_usuario_id: creditoUsuario.ID,
         TARJCREDCUPROT: faker.string.numeric(16),
         ENTOTORGARANT: faker.company.name(),
@@ -135,7 +135,7 @@ async function main() {
     // Dirección usuario
     await prisma.direccion_usuario.create({
       data: {
-        usuario_id: usuario.ID,
+        usuario_id: usuario.IDENTIFICACION,
         TIPO_ZONA: faker.helpers.arrayElement(['Urbana', 'Rural']),
         DIRECCION_RESIDENCIA: faker.location.streetAddress(),
         DIRECCION_LABORAL: faker.location.streetAddress(),
@@ -163,7 +163,7 @@ async function main() {
     // Empleo
     await prisma.empleo.create({
       data: {
-        usuario_id: usuario.ID,
+        usuario_id: usuario.IDENTIFICACION,
         IDENTIFICACION_COMPANIA: faker.string.numeric(10),
         NOMBRE_COMPANIA: faker.company.name(),
         EMPLEO_PRINCIPAL: faker.datatype.boolean() ? 'Sí' : 'No',
@@ -181,7 +181,7 @@ async function main() {
     // Finanzas personales
     await prisma.finanzas_personales.create({
       data: {
-        usuario_id: usuario.ID,
+        usuario_id: usuario.IDENTIFICACION,
         DESCRIPCION_OTROS_INGRESOS: faker.lorem.words(3),
         INGRESOS_OTROS: faker.number.float({ min: 0, max: 2000 }),
         INGRESOS_ARRIENDOS: faker.number.float({ min: 0, max: 2000 }),

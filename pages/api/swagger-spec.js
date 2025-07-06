@@ -13,89 +13,235 @@ export default function handler(req, res) {
       },
     ],
     paths: {
+      "/api/creditos": {
+        get: {
+          summary: "Listar todos los créditos",
+          tags: ["Créditos"],
+          responses: {
+            200: {
+              description: "Lista de créditos",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: { $ref: "#/components/schemas/CreditoPrestamo" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        post: {
+          summary: "Crear un nuevo crédito",
+          tags: ["Créditos"],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/CreditoPrestamoInput" }
+              }
+            }
+          },
+          responses: {
+            201: {
+              description: "Crédito creado exitosamente",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/CreditoPrestamo" }
+                }
+              }
+            },
+            400: {
+              description: "Error en los datos de entrada"
+            }
+          }
+        }
+      },
+
+
+
+      "/api/creditos/usuario/{identificacion}": {
+        get: {
+          summary: "Obtener créditos por identificación de usuario",
+          tags: ["Credito Prestamo"],
+          parameters: [
+            {
+              name: "identificacion",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Créditos asociados al usuario",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: { $ref: "#/components/schemas/CreditoPrestamo" },
+                  },
+                },
+              },
+            },
+            404: {
+              description: "Usuario no encontrado o sin créditos",
+            },
+          },
+        },
+      },
+      "/api/creditos/{id}": {
+        get: {
+          summary: "Obtener un crédito por ID",
+          tags: ["Credito Prestamo"],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              schema: { type: "integer" },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Crédito encontrado",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/CreditoPrestamo" },
+                },
+              },
+            },
+            404: {
+              description: "Crédito no encontrado",
+            },
+          },
+        },
+        put: {
+          summary: "Actualizar un crédito por ID",
+          tags: ["Credito Prestamo"],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              schema: { type: "integer" },
+            },
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/CreditoPrestamo" },
+              },
+            },
+          },
+          responses: {
+            200: { description: "Crédito actualizado" },
+            404: { description: "Crédito no encontrado" },
+          },
+        },
+        delete: {
+          summary: "Eliminar un crédito por ID",
+          tags: ["Credito Prestamo"],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              schema: { type: "integer" },
+            },
+          ],
+          responses: {
+            200: { description: "Crédito eliminado" },
+            404: { description: "Crédito no encontrado" },
+          },
+        },
+      },
+
+
       '/api/auth/login': {
-  post: {
-    tags: ['Autenticación'],
-    summary: 'Inicio de sesión',
-    description: 'Permite autenticar a un usuario usando correo y contraseña.',
-    requestBody: {
-      required: true,
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            required: ['ADDRESSLINE_MAIL', 'PASSWORD'],
-            properties: {
-              ADDRESSLINE_MAIL: {
-                type: 'string',
-                format: 'email',
-                example: 'usuario@ejemplo.com',
+        post: {
+          tags: ['Autenticación'],
+          summary: 'Inicio de sesión',
+          description: 'Permite autenticar a un usuario usando correo y contraseña.',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  required: ['ADDRESSLINE_MAIL', 'PASSWORD'],
+                  properties: {
+                    ADDRESSLINE_MAIL: {
+                      type: 'string',
+                      format: 'email',
+                      example: 'usuario@ejemplo.com',
+                    },
+                    PASSWORD: {
+                      type: 'string',
+                      example: 'contraseña123',
+                    },
+                  },
+                },
               },
-              PASSWORD: {
-                type: 'string',
-                example: 'contraseña123',
+            },
+          },
+          responses: {
+            200: {
+              description: 'Autenticación exitosa',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      message: { type: 'string', example: 'Autenticación exitosa' },
+                    },
+                  },
+                },
+              },
+            },
+            400: {
+              description: 'Faltan credenciales',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      error: { type: 'string', example: 'Faltan credenciales' },
+                    },
+                  },
+                },
+              },
+            },
+            401: {
+              description: 'Credenciales inválidas',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      error: { type: 'string', example: 'Credenciales inválidas' },
+                    },
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Error interno del servidor',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      error: { type: 'string', example: 'Error interno del servidor' },
+                    },
+                  },
+                },
               },
             },
           },
         },
       },
-    },
-    responses: {
-      200: {
-        description: 'Autenticación exitosa',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                message: { type: 'string', example: 'Autenticación exitosa' },
-              },
-            },
-          },
-        },
-      },
-      400: {
-        description: 'Faltan credenciales',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                error: { type: 'string', example: 'Faltan credenciales' },
-              },
-            },
-          },
-        },
-      },
-      401: {
-        description: 'Credenciales inválidas',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                error: { type: 'string', example: 'Credenciales inválidas' },
-              },
-            },
-          },
-        },
-      },
-      500: {
-        description: 'Error interno del servidor',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                error: { type: 'string', example: 'Error interno del servidor' },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-},
 
 
 
@@ -103,117 +249,117 @@ export default function handler(req, res) {
 
 
       '/api/usuarios/{identificacion}': {
-  get: {
-    tags: ['Usuarios'],
-    summary: 'Obtener un usuario por ID',
-    description: 'Retorna los datos de un usuario específico por su ID.',
-    parameters: [
-      {
-        name: 'identificacion',
-        in: 'path',
-        required: true,
-        schema: {
-          type: 'integer'
+        get: {
+          tags: ['Usuarios'],
+          summary: 'Obtener un usuario por ID',
+          description: 'Retorna los datos de un usuario específico por su ID.',
+          parameters: [
+            {
+              name: 'identificacion',
+              in: 'path',
+              required: true,
+              schema: {
+                type: 'integer'
+              },
+              description: 'ID del usuario a obtener'
+            }
+          ],
+          responses: {
+            200: {
+              description: 'Usuario obtenido correctamente',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Usuario'
+                  }
+                }
+              }
+            },
+            404: {
+              description: 'Usuario no encontrado'
+            },
+            500: {
+              description: 'Error interno del servidor'
+            }
+          }
         },
-        description: 'ID del usuario a obtener'
-      }
-    ],
-    responses: {
-      200: {
-        description: 'Usuario obtenido correctamente',
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/Usuario'
+
+        put: {
+          tags: ['Usuarios'],
+          summary: 'Actualizar un usuario por ID',
+          description: 'Actualiza los datos de un usuario específico por su ID.',
+          parameters: [
+            {
+              name: 'identificacion',
+              in: 'path',
+              required: true,
+              schema: {
+                type: 'integer'
+              },
+              description: 'ID del usuario a actualizar'
+            }
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/UsuarioInput'
+                }
+              }
+            }
+          },
+          responses: {
+            200: {
+              description: 'Usuario actualizado correctamente',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Usuario'
+                  }
+                }
+              }
+            },
+            400: {
+              description: 'Error de validación de datos'
+            },
+            404: {
+              description: 'Usuario no encontrado'
+            },
+            500: {
+              description: 'Error interno del servidor'
+            }
+          }
+        },
+
+        delete: {
+          tags: ['Usuarios'],
+          summary: 'Eliminar un usuario por ID',
+          description: 'Elimina un usuario específico por su ID.',
+          parameters: [
+            {
+              name: 'identificacion',
+              in: 'path',
+              required: true,
+              schema: {
+                type: 'integer'
+              },
+              description: 'ID del usuario a eliminar'
+            }
+          ],
+          responses: {
+            204: {
+              description: 'Usuario eliminado correctamente (sin contenido)'
+            },
+            404: {
+              description: 'Usuario no encontrado'
+            },
+            500: {
+              description: 'Error interno del servidor'
             }
           }
         }
       },
-      404: {
-        description: 'Usuario no encontrado'
-      },
-      500: {
-        description: 'Error interno del servidor'
-      }
-    }
-  },
-
-  put: {
-    tags: ['Usuarios'],
-    summary: 'Actualizar un usuario por ID',
-    description: 'Actualiza los datos de un usuario específico por su ID.',
-    parameters: [
-      {
-        name: 'identificacion',
-        in: 'path',
-        required: true,
-        schema: {
-          type: 'integer'
-        },
-        description: 'ID del usuario a actualizar'
-      }
-    ],
-    requestBody: {
-      required: true,
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/components/schemas/UsuarioInput'
-          }
-        }
-      }
-    },
-    responses: {
-      200: {
-        description: 'Usuario actualizado correctamente',
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/Usuario'
-            }
-          }
-        }
-      },
-      400: {
-        description: 'Error de validación de datos'
-      },
-      404: {
-        description: 'Usuario no encontrado'
-      },
-      500: {
-        description: 'Error interno del servidor'
-      }
-    }
-  },
-
-  delete: {
-    tags: ['Usuarios'],
-    summary: 'Eliminar un usuario por ID',
-    description: 'Elimina un usuario específico por su ID.',
-    parameters: [
-      {
-        name: 'identificacion',
-        in: 'path',
-        required: true,
-        schema: {
-          type: 'integer'
-        },
-        description: 'ID del usuario a eliminar'
-      }
-    ],
-    responses: {
-      204: {
-        description: 'Usuario eliminado correctamente (sin contenido)'
-      },
-      404: {
-        description: 'Usuario no encontrado'
-      },
-      500: {
-        description: 'Error interno del servidor'
-      }
-    }
-  }
-},
 
       "/api/usuarios": {
         get: {
@@ -267,6 +413,62 @@ export default function handler(req, res) {
     },
     components: {
       schemas: {
+        CreditoPrestamo: {
+      type: "object",
+      properties: {
+        ID: { type: "integer" },
+        usuario_id: { type: "string" },
+        credito_usuario_id: { type: "integer", nullable: true },
+        clasegarantia: { type: "string", nullable: true },
+        destinocredito: { type: "string", nullable: true },
+        CodOficina: { type: "string", nullable: true },
+        AmortiCapital: { type: "number", nullable: true },
+        TipoVivienda: { type: "string", nullable: true },
+        VIS: { type: "number", nullable: true },
+        RangoTipo: { type: "string", nullable: true },
+        EntidadRedescuento: { type: "string", nullable: true },
+        MargenRedescuento: { type: "number", nullable: true },
+        Subsidio: { type: "string", nullable: true },
+        Desembolso: { type: "string", nullable: true },
+        Moneda: { type: "string", nullable: true },
+        AportesSociales: { type: "number", nullable: true },
+        LineaCredEntidad: { type: "string", nullable: true },
+        NumModificaciones: { type: "number", nullable: true },
+        Estadocredito: { type: "string", nullable: true },
+        NITPatronal: { type: "string", nullable: true },
+        NombrePatronal: { type: "string", nullable: true }
+      }
+    },
+    CreditoPrestamoInput: {
+      type: "object",
+      required: ["usuario_id"],
+      properties: {
+        usuario_id: { type: "string" },
+        credito_usuario_id: { type: "integer" },
+        clasegarantia: { type: "string" },
+        destinocredito: { type: "string" },
+        CodOficina: { type: "string" },
+        AmortiCapital: { type: "number" },
+        TipoVivienda: { type: "string" },
+        VIS: { type: "number" },
+        RangoTipo: { type: "string" },
+        EntidadRedescuento: { type: "string" },
+        MargenRedescuento: { type: "number" },
+        Subsidio: { type: "string" },
+        Desembolso: { type: "string" },
+        Moneda: { type: "string" },
+        AportesSociales: { type: "number" },
+        LineaCredEntidad: { type: "string" },
+        NumModificaciones: { type: "number" },
+        Estadocredito: { type: "string" },
+        NITPatronal: { type: "string" },
+        NombrePatronal: { type: "string" }
+      }
+    },
+
+
+
+
         Usuario: {
           type: "object",
           properties: {

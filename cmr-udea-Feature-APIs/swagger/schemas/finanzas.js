@@ -1,0 +1,48 @@
+const finanzasSchema = {
+  FinanzasPersonalesInput: {
+    type: 'object',
+    required: ['usuario_id'],
+    properties: {
+      usuario_id: { type: 'string' },
+      DESCRIPCION_OTROS_INGRESOS: { type: 'string' },
+      INGRESOS_OTROS: { type: 'number' },
+      INGRESOS_ARRIENDOS: { type: 'number' },
+      INGRESOS_HONORARIOS: { type: 'number' },
+      INGRESOS_RENDIMIENTOS: { type: 'number' },
+      ACTIVOS_INMUEBLES: { type: 'number' },
+      ACTIVOS_INVERSIONES: { type: 'number' },
+      ACTIVOS_OTROS: { type: 'number' },
+      ACTIVOS_VEHICULOS: { type: 'number' },
+      PASIVOS_OTROS: { type: 'number' },
+      GASTOS_CREDITOS: { type: 'number' },
+      GASTOS_HIPOTECA: { type: 'number' },
+      GASTOS_OTROS: { type: 'number' },
+      GASTOS_FAMILIARES: { type: 'number' },
+      GASTOS_ARRENDAMIENTO: { type: 'number' },
+      APORTES: { type: 'number' },
+    },
+  },
+  FinanzasPersonalesUpdate: {
+    type: 'object',
+    properties: {
+      DESCRIPCION_OTROS_INGRESOS: { type: 'string' },
+      INGRESOS_OTROS: { type: 'number' },
+      INGRESOS_ARRIENDOS: { type: 'number' },
+      INGRESOS_HONORARIOS: { type: 'number' },
+      INGRESOS_RENDIMIENTOS: { type: 'number' },
+      ACTIVOS_INMUEBLES: { type: 'number' },
+      ACTIVOS_INVERSIONES: { type: 'number' },
+      ACTIVOS_OTROS: { type: 'number' },
+      ACTIVOS_VEHICULOS: { type: 'number' },
+      PASIVOS_OTROS: { type: 'number' },
+      GASTOS_CREDITOS: { type: 'number' },
+      GASTOS_HIPOTECA: { type: 'number' },
+      GASTOS_OTROS: { type: 'number' },
+      GASTOS_FAMILIARES: { type: 'number' },
+      GASTOS_ARRENDAMIENTO: { type: 'number' },
+      APORTES: { type: 'number' },
+    },
+  },
+};
+
+export default finanzasSchema;

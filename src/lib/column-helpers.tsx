@@ -4,11 +4,10 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Row } from "@tanstack/react-table"
 
-// Predefined header with a dropdown menu for sorting
+// Predefined header with a dropdown menu for sorting.
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 
 import { FilterFn } from "@tanstack/react-table"
-import { Capitalize } from "@/lib/utils"
 
 export type ColumnType = "string" | "number" | "boolean" | "date"
 
@@ -71,21 +70,48 @@ export function makeColumn<TData, TValue = unknown>(
       type: options.type ?? "string",
     },
     cell:
-      options.cell ??
-      ((info) => {
-        const value = info.row.getValue(key);
-        switch (type) {
-          case "date": {
-            const date = value instanceof Date ? value : new Date(value as string);
-            return isNaN(date.getTime()) ? "" : date.toLocaleDateString("es-CO");
-          }
-          case "boolean": return value ? "Sí" : "No";
-          case "number": return (value as number).toString();
-          case "string": return value;
-          default:
-            return value as React.ReactNode;
+  options.cell ??
+    ((info) => {
+      const value = info.row.getValue(key);
+
+      // Displays unavailable data in a muted color.
+      const wrap = (content: string) =>
+        content === "No disponible" ? (
+          <span className="text-muted-foreground/40">{content}</span>
+        ) : (
+          content
+        );
+
+      // Displays data according to its type, null or undefined values ​​are changed to "No disponible".
+      switch (type) {
+        case "date": {
+          const date = value instanceof Date ? value : new Date(value as string);
+          return wrap(
+            isNaN(date.getTime())
+              ? "No disponible"
+              : date.toLocaleDateString("es-CO")
+          );
         }
-      }),
+        case "boolean":
+          return wrap(
+            value === true
+              ? "Sí"
+              : value === false
+              ? "No"
+              : "No disponible"
+          );
+        case "number":
+          return wrap(
+            value !== null && value !== undefined
+              ? (value as number).toString()
+              : "No disponible"
+          );
+        case "string":
+          return wrap(String(value ?? "No disponible"));
+        default:
+          return wrap(String(value ?? "No disponible"));
+      }
+    }),
     filterFn: options.filterFn ?? (defaultFilterFns[(type)] as FilterFn<TData>),
     enableColumnFilter: true,
   }

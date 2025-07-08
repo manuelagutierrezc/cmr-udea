@@ -13,7 +13,7 @@ export const UsuarioColumns: ColumnDef<Usuario>[] = [
     //This is the actions column, clicking the button will open a new tab with the user's details.
     id: "actions",
     cell: ({ row }) => {
-      const id = row.original.ID
+      const id = row.original.IDENTIFICACION
 
       return (
         <Button

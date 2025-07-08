@@ -73,7 +73,7 @@ export type CreditoUsuario = {
 
 export type CreditoPrestamo = {
     ID:                   number;
-    usuario_id:           number;
+    usuario_id:           string;
     credito_usuario_id?:  number;
     clasegarantia?:       string;
     destinocredito?:      string;
@@ -122,7 +122,7 @@ export type ReingresosUsuario = {
 
 export type DireccionUsuario = {
     ID:                       number;
-    usuario_id:               number;
+    usuario_id:               string;
     TIPO_ZONA?:               string;
     DIRECCION_RESIDENCIA?:    string;
     DIRECCION_LABORAL?:       string;
@@ -148,7 +148,7 @@ export type DireccionUsuario = {
 
 export type Empleo = {
     ID:                       number;
-    usuario_id:               number;
+    usuario_id:               string;
     IDENTIFICACION_COMPANIA?: string;
     NOMBRE_COMPANIA?:         string;
     EMPLEO_PRINCIPAL?:        string;
@@ -167,7 +167,7 @@ export type Empleo = {
 
 export type FinanzasPersonales = {
     ID:                             number;
-    usuario_id:                     number;
+    usuario_id:                     string;
     DESCRIPCION_OTROS_INGRESOS?:    string;
     INGRESOS_OTROS?:                number;
     INGRESOS_ARRIENDOS?:            number;

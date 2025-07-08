@@ -3,12 +3,14 @@ import reingresosUsuarioPaths from "../../swagger/paths/reingresosUsuario";
 import direccionPaths from "../../swagger/paths/direcciones.js";
 import empleoPaths from "../../swagger/paths/empleos.js";
 import finanzasPaths from '../../swagger/paths/finanzas';
+import pqrPaths from "../../swagger/paths/pqr";
 
 import garantiaSchema from "../../swagger/schemas/garantia.js";
 import reingresoUsuarioSchema from "../../swagger/schemas/reingresoUsuario";
 import direccionSchema from "../../swagger/schemas/direccionUsuario.js";
 import empleoSchema from "../../swagger/schemas/empleo.js";
 import finanzasSchema from '../../swagger/schemas/finanzas';
+import pqrSchema from "../../swagger/schemas/pqr";
 
 export default function handler(req, res) {
   const swaggerDocument = {
@@ -25,6 +27,7 @@ export default function handler(req, res) {
       },
     ],
     paths: {
+      ...pqrPaths,
       ...finanzasPaths,
       ...empleoPaths,
       ...direccionPaths,
@@ -631,6 +634,7 @@ export default function handler(req, res) {
     },
     components: {
       schemas: {
+        ...pqrSchema,
         ...finanzasSchema,
         ...empleoSchema,
         ...direccionSchema,

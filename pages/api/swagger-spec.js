@@ -1,6 +1,8 @@
 import garantiasPaths from "../../swagger/paths/garantias";
+import reingresosUsuarioPaths from "../../swagger/paths/reingresosUsuario";
 
 import garantiaSchema from "../../swagger/schemas/garantia.js";
+import reingresoUsuarioSchema from "../../swagger/schemas/reingresoUsuario";
 
 export default function handler(req, res) {
   const swaggerDocument = {
@@ -17,7 +19,9 @@ export default function handler(req, res) {
       },
     ],
     paths: {
+      ...reingresosUsuarioPaths,
       ...garantiasPaths,
+      
 
       
       "/api/tarjetas": {
@@ -619,6 +623,7 @@ export default function handler(req, res) {
     components: {
       schemas: {
         ...garantiaSchema,
+        ...reingresoUsuarioSchema,
 
 
 

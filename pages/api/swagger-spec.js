@@ -13,6 +13,73 @@ export default function handler(req, res) {
       },
     ],
     paths: {
+      "/api/tarjetas": {
+        get: {
+          tags: ["Tarjeta Crédito"],
+          summary: "Obtener todas las tarjetas",
+          responses: {
+            200: {
+              description: "Lista de tarjetas",
+            },
+          },
+        },
+        post: {
+          tags: ["Tarjeta Crédito"],
+          summary: "Crear una tarjeta",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/TarjetaCredito" },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: "Tarjeta creada",
+            },
+          },
+        },
+      },
+      "/api/tarjetas/{id}": {
+        get: {
+          tags: ["Tarjeta Crédito"],
+          summary: "Obtener tarjeta por ID",
+          parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }],
+          responses: { 200: { description: "Tarjeta encontrada" }, 404: { description: "No encontrada" } },
+        },
+        put: {
+          tags: ["Tarjeta Crédito"],
+          summary: "Actualizar tarjeta",
+          parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/TarjetaCredito" },
+              },
+            },
+          },
+          responses: { 200: { description: "Actualizada" } },
+        },
+        delete: {
+          tags: ["Tarjeta Crédito"],
+          summary: "Eliminar tarjeta",
+          parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }],
+          responses: { 204: { description: "Eliminada" } },
+        },
+      },
+      "/api/tarjetas/usuario/[usuario_id]": {
+        get: {
+          tags: ["Tarjeta Crédito"],
+          summary: "Buscar tarjetas por identificación de usuario",
+          parameters: [{ name: "usuario_id", in: "path", required: true, schema: { type: "string" } }],
+          responses: { 200: { description: "Lista de tarjetas del usuario" } },
+        },
+      },
+
+
+
       "/api/creditos-usuario": {
         "get": {
           "summary": "Listar todos los créditos de usuario",
@@ -544,6 +611,18 @@ export default function handler(req, res) {
     },
     components: {
       schemas: {
+        TarjetaCredito: {
+          type: "object",
+          properties: {
+            usuario_id: { type: "string" },
+            credito_usuario_id: { type: "integer" },
+            TARJCREDCUPROT: { type: "string" },
+            ENTOTORGARANT: { type: "string" },
+          },
+        },
+
+
+
         CreditoUsuario: {
           "type": "object",
           "properties": {

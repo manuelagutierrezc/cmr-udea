@@ -1,3 +1,7 @@
+import garantiasPaths from "../../swagger/paths/garantias";
+
+import garantiaSchema from "../../swagger/schemas/garantia.js";
+
 export default function handler(req, res) {
   const swaggerDocument = {
     openapi: "3.0.0",
@@ -13,6 +17,9 @@ export default function handler(req, res) {
       },
     ],
     paths: {
+      ...garantiasPaths,
+
+      
       "/api/tarjetas": {
         get: {
           tags: ["Tarjeta Crédito"],
@@ -611,6 +618,10 @@ export default function handler(req, res) {
     },
     components: {
       schemas: {
+        ...garantiaSchema,
+
+
+
         TarjetaCredito: {
           type: "object",
           properties: {

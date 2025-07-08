@@ -13,6 +13,137 @@ export default function handler(req, res) {
       },
     ],
     paths: {
+      "/api/creditos-usuario": {
+        "get": {
+          "summary": "Listar todos los créditos de usuario",
+          "tags": ["Créditos Usuario"],
+          "responses": {
+            "200": {
+              "description": "Lista de créditos usuario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/CreditoUsuario"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Crear un nuevo crédito usuario",
+          "tags": ["Créditos Usuario"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreditoUsuario"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Crédito usuario creado"
+            },
+            "400": {
+              "description": "Error en la creación"
+            }
+          }
+        }
+      },
+      "/api/creditos-usuario/{id}": {
+        "get": {
+          "summary": "Obtener un crédito usuario por ID",
+          "tags": ["Créditos Usuario"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Crédito usuario encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CreditoUsuario"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Crédito usuario no encontrado"
+            }
+          }
+        },
+        "put": {
+          "summary": "Actualizar un crédito usuario por ID",
+          "tags": ["Créditos Usuario"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreditoUsuario"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Crédito usuario actualizado"
+            },
+            "400": {
+              "description": "Error al actualizar"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Eliminar un crédito usuario por ID",
+          "tags": ["Créditos Usuario"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Crédito usuario eliminado"
+            },
+            "404": {
+              "description": "Crédito usuario no encontrado"
+            }
+          }
+        }
+      },
+
+
+
       "/api/creditos": {
         get: {
           summary: "Listar todos los créditos",
@@ -413,58 +544,90 @@ export default function handler(req, res) {
     },
     components: {
       schemas: {
+        CreditoUsuario: {
+          "type": "object",
+          "properties": {
+            "ID": { "type": "integer" },
+            "TipoIden": { "type": "string", "nullable": true },
+            "NIT": { "type": "string", "nullable": true },
+            "CodigoContable": { "type": "integer", "nullable": true },
+            "ModificacionesAlCredito": { "type": "number", "format": "float", "nullable": true },
+            "NroCredito": { "type": "string", "nullable": true },
+            "FechaDesembolsoInicial": { "type": "string", "format": "date-time", "nullable": true },
+            "FechaVencimiento": { "type": "string", "format": "date-time", "nullable": true },
+            "Morosidad": { "type": "number", "format": "float", "nullable": true },
+            "TipoCuota": { "type": "string", "nullable": true },
+            "AlturaCuota": { "type": "number", "format": "float", "nullable": true },
+            "Amortizacion": { "type": "number", "format": "float", "nullable": true },
+            "Modalidad": { "type": "string", "nullable": true },
+            "TasaInteresEfectiva": { "type": "number", "format": "float", "nullable": true },
+            "ValorPrestamo": { "type": "number", "format": "float", "nullable": true },
+            "ValorCuotaFija": { "type": "number", "format": "float", "nullable": true },
+            "SaldoCapital": { "type": "number", "format": "float", "nullable": true },
+            "SaldoIntereses": { "type": "number", "format": "float", "nullable": true },
+            "OtrosSaldos": { "type": "number", "format": "float", "nullable": true },
+            "ValorMora": { "type": "number", "format": "float", "nullable": true },
+            "ValosCuotasExtra": { "type": "number", "format": "float", "nullable": true },
+            "MesesCuotaExtra": { "type": "number", "format": "float", "nullable": true },
+            "fechaultimopago": { "type": "string", "format": "date-time", "nullable": true }
+          }
+        },
+
+
+
+
         CreditoPrestamo: {
-      type: "object",
-      properties: {
-        ID: { type: "integer" },
-        usuario_id: { type: "string" },
-        credito_usuario_id: { type: "integer", nullable: true },
-        clasegarantia: { type: "string", nullable: true },
-        destinocredito: { type: "string", nullable: true },
-        CodOficina: { type: "string", nullable: true },
-        AmortiCapital: { type: "number", nullable: true },
-        TipoVivienda: { type: "string", nullable: true },
-        VIS: { type: "number", nullable: true },
-        RangoTipo: { type: "string", nullable: true },
-        EntidadRedescuento: { type: "string", nullable: true },
-        MargenRedescuento: { type: "number", nullable: true },
-        Subsidio: { type: "string", nullable: true },
-        Desembolso: { type: "string", nullable: true },
-        Moneda: { type: "string", nullable: true },
-        AportesSociales: { type: "number", nullable: true },
-        LineaCredEntidad: { type: "string", nullable: true },
-        NumModificaciones: { type: "number", nullable: true },
-        Estadocredito: { type: "string", nullable: true },
-        NITPatronal: { type: "string", nullable: true },
-        NombrePatronal: { type: "string", nullable: true }
-      }
-    },
-    CreditoPrestamoInput: {
-      type: "object",
-      required: ["usuario_id"],
-      properties: {
-        usuario_id: { type: "string" },
-        credito_usuario_id: { type: "integer" },
-        clasegarantia: { type: "string" },
-        destinocredito: { type: "string" },
-        CodOficina: { type: "string" },
-        AmortiCapital: { type: "number" },
-        TipoVivienda: { type: "string" },
-        VIS: { type: "number" },
-        RangoTipo: { type: "string" },
-        EntidadRedescuento: { type: "string" },
-        MargenRedescuento: { type: "number" },
-        Subsidio: { type: "string" },
-        Desembolso: { type: "string" },
-        Moneda: { type: "string" },
-        AportesSociales: { type: "number" },
-        LineaCredEntidad: { type: "string" },
-        NumModificaciones: { type: "number" },
-        Estadocredito: { type: "string" },
-        NITPatronal: { type: "string" },
-        NombrePatronal: { type: "string" }
-      }
-    },
+          type: "object",
+          properties: {
+            ID: { type: "integer" },
+            usuario_id: { type: "string" },
+            credito_usuario_id: { type: "integer", nullable: true },
+            clasegarantia: { type: "string", nullable: true },
+            destinocredito: { type: "string", nullable: true },
+            CodOficina: { type: "string", nullable: true },
+            AmortiCapital: { type: "number", nullable: true },
+            TipoVivienda: { type: "string", nullable: true },
+            VIS: { type: "number", nullable: true },
+            RangoTipo: { type: "string", nullable: true },
+            EntidadRedescuento: { type: "string", nullable: true },
+            MargenRedescuento: { type: "number", nullable: true },
+            Subsidio: { type: "string", nullable: true },
+            Desembolso: { type: "string", nullable: true },
+            Moneda: { type: "string", nullable: true },
+            AportesSociales: { type: "number", nullable: true },
+            LineaCredEntidad: { type: "string", nullable: true },
+            NumModificaciones: { type: "number", nullable: true },
+            Estadocredito: { type: "string", nullable: true },
+            NITPatronal: { type: "string", nullable: true },
+            NombrePatronal: { type: "string", nullable: true }
+          }
+        },
+        CreditoPrestamoInput: {
+          type: "object",
+          required: ["usuario_id"],
+          properties: {
+            usuario_id: { type: "string" },
+            credito_usuario_id: { type: "integer" },
+            clasegarantia: { type: "string" },
+            destinocredito: { type: "string" },
+            CodOficina: { type: "string" },
+            AmortiCapital: { type: "number" },
+            TipoVivienda: { type: "string" },
+            VIS: { type: "number" },
+            RangoTipo: { type: "string" },
+            EntidadRedescuento: { type: "string" },
+            MargenRedescuento: { type: "number" },
+            Subsidio: { type: "string" },
+            Desembolso: { type: "string" },
+            Moneda: { type: "string" },
+            AportesSociales: { type: "number" },
+            LineaCredEntidad: { type: "string" },
+            NumModificaciones: { type: "number" },
+            Estadocredito: { type: "string" },
+            NITPatronal: { type: "string" },
+            NombrePatronal: { type: "string" }
+          }
+        },
 
 
 

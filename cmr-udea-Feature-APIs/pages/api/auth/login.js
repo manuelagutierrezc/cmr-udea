@@ -18,13 +18,6 @@ export default async function handler(req, res) {
   try {
     const usuario = await prisma.usuario.findUnique({
       where: { ADDRESSLINE_MAIL },
-      include: {
-        usuario_rol: {
-          include: {
-            rol: true,
-          },
-        },
-      },
     });
 
     if (!usuario || !(await bcrypt.compare(PASSWORD, usuario.PASSWORD))) {
@@ -33,7 +26,7 @@ export default async function handler(req, res) {
 
     const info = {
       id: usuario.ID,
-      rol: usuario.usuario_rol[0]?.rol?.nombre || "sin rol"
+      rol: usuario.rol,
     }
 
     // Autenticación exitosa

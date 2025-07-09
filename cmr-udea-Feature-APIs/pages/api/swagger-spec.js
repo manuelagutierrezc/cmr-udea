@@ -11,6 +11,7 @@ import direccionSchema from "../../swagger/schemas/direccionUsuario.js";
 import empleoSchema from "../../swagger/schemas/empleo.js";
 import finanzasSchema from '../../swagger/schemas/finanzas';
 import pqrSchema from "../../swagger/schemas/pqr";
+import { type } from "os";
 
 export default function handler(req, res) {
   const swaggerDocument = {
@@ -379,6 +380,90 @@ export default function handler(req, res) {
         },
       },
 
+      '/api/auth/register': {
+        post: {
+          tags: ['Autenticación'],
+          summary: 'Registro de usuarios',
+          description: 'Permite registrar a un usuario usando correo y contraseña.',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  required: ['ADDRESSLINE_MAIL', 'PASSWORD'],
+                  properties: {
+                    ADDRESSLINE_MAIL: {
+                      type: 'string',
+                      format: 'email',
+                      example: 'usuario@ejemplo.com',
+                    },
+                    PASSWORD: {
+                      type: 'string',
+                      example: 'contraseña123',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: 'Registro exitoso',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      message: { type: 'string', example: 'Registro exitoso' },
+                    },
+                  },
+                },
+              },
+            },
+            201: {
+              description: 'Creación del resgitro o del usuario',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      message: { type: 'string', example: 'Creación exitosa de la cuenta' },
+                    },
+                  },
+                },
+              },
+            },
+            400: {
+              description: 'Datos inválidos o faltantes',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      error: { type: 'string', example: 'Los datos son inálidos o faltan' },
+                    },
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Error interno del servidor',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      error: { type: 'string', example: 'Error interno del servidor' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+
 
       '/api/auth/login': {
         post: {
@@ -463,11 +548,6 @@ export default function handler(req, res) {
           },
         },
       },
-
-
-
-
-
 
       '/api/usuarios/{identificacion}': {
         get: {

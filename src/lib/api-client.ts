@@ -2,7 +2,7 @@ import { CreditoPrestamo, CreditoUsuario, DireccionUsuario, Empleo, FinanzasPers
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
 
-export async function fetchUsuarios(): Promise<Usuario[]> {
+export async function getUsuarios(): Promise<Usuario[]> {
     const res = await fetch(`${BASE_URL}/api/usuarios`, {
         cache: "no-store",
     })
@@ -14,7 +14,7 @@ export async function fetchUsuarios(): Promise<Usuario[]> {
     return res.json()
 }
 
-export async function fetchUsuarioPorIdentificacion(id: string): Promise<Usuario> {
+export async function getUsuarioByIdentificacion(id: string): Promise<Usuario> {
     const res = await fetch(`${BASE_URL}/api/usuarios/${id}`, {
         cache: "no-store",
     })
@@ -26,7 +26,7 @@ export async function fetchUsuarioPorIdentificacion(id: string): Promise<Usuario
     return res.json()
 }
 
-export async function fetchDireccionPorUsuario(id: string): Promise<DireccionUsuario[]> {
+export async function getDireccionByUsuario(id: string): Promise<DireccionUsuario[]> {
     const res = await fetch(`${BASE_URL}/api/direcciones/usuario/${id}`, {
         cache: "no-store",
     })
@@ -38,7 +38,7 @@ export async function fetchDireccionPorUsuario(id: string): Promise<DireccionUsu
     return res.json()
 }
 
-export async function fetchEmpleoPorUsuario(id: string): Promise<Empleo[]> {
+export async function getEmpleoByUsuario(id: string): Promise<Empleo[]> {
     const res = await fetch(`${BASE_URL}/api/empleos/usuario/${id}`, {
         cache: "no-store",
     })
@@ -50,7 +50,7 @@ export async function fetchEmpleoPorUsuario(id: string): Promise<Empleo[]> {
     return res.json()
 }
 
-export async function fetchFinanzasPorUsuario(id: string): Promise<FinanzasPersonales[]> {
+export async function getFinanzasByUsuario(id: string): Promise<FinanzasPersonales[]> {
     const res = await fetch(`${BASE_URL}/api/finanzas/usuario/${id}`, {
         cache: "no-store",
     })
@@ -62,7 +62,8 @@ export async function fetchFinanzasPorUsuario(id: string): Promise<FinanzasPerso
     return res.json()
 }
 
-export async function fetchReingresosPorUsuario(id: string): Promise<ReingresosUsuario[]> {
+//This function receives the user's table entry ID
+export async function getReingresosByUsuarioId(id: number): Promise<ReingresosUsuario[]> {
     const res = await fetch(`${BASE_URL}/api/reingresos-usuario/usuario/${id}`, {
         cache: "no-store",
     })
@@ -74,7 +75,8 @@ export async function fetchReingresosPorUsuario(id: string): Promise<ReingresosU
     return res.json()
 }
 
-export async function fetchCreditosPorUsuario(id: string): Promise<CreditoPrestamo[]> {
+// This function receives the user's identification number
+export async function getCreditosByUsuario(id: string): Promise<CreditoPrestamo[]> {
     const res = await fetch(`${BASE_URL}/api/creditos/usuario/${id}`, {
         cache: "no-store",
     })
@@ -86,7 +88,7 @@ export async function fetchCreditosPorUsuario(id: string): Promise<CreditoPresta
     return res.json()
 }
 
-export async function fetchDetallesCreditoPorId(id: number): Promise<CreditoUsuario> {
+export async function getDetallesCreditoById(id: number): Promise<CreditoUsuario> {
     const res = await fetch(`${BASE_URL}/api/creditos-usuario/${id}`, {
         cache: "no-store",
     });
@@ -100,7 +102,7 @@ export async function fetchDetallesCreditoPorId(id: number): Promise<CreditoUsua
     return res.json();
 }
 
-export async function fetchGarantiasPorCreditoUsuario(id: number): Promise<Garantia[]> {
+export async function getGarantiasByCreditoUsuario(id: number): Promise<Garantia[]> {
     const res = await fetch(`${BASE_URL}/api/garantias/usuario/${id}`, {
         cache: "no-store",
     })
@@ -112,7 +114,7 @@ export async function fetchGarantiasPorCreditoUsuario(id: number): Promise<Garan
     return res.json()
 }
 
-export async function fetchTarjetasPorUsuario(id: string): Promise<TarjetaCredito[]> {
+export async function getTarjetasByUsuario(id: string): Promise<TarjetaCredito[]> {
     const res = await fetch(`${BASE_URL}/api/tarjetas/usuario/${id}`, {
         cache: "no-store",
     })
@@ -124,7 +126,7 @@ export async function fetchTarjetasPorUsuario(id: string): Promise<TarjetaCredit
     return res.json()
 }
 
-export async function fetchPqrs(): Promise<pqr[]> {
+export async function getPqrs(): Promise<pqr[]> {
     const res = await fetch(`${BASE_URL}/api/pqr`, {
         cache: "no-store",
     })

@@ -25,7 +25,7 @@ import { Capitalize } from "@/lib/utils"
 
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
-import { fetchUsuarioPorIdentificacion, fetchDireccionPorUsuario, fetchEmpleoPorUsuario, fetchFinanzasPorUsuario, fetchReingresosPorUsuario, fetchCreditosPorUsuario } from "@/lib/api-client"
+import { getUsuarioByIdentificacion, getDireccionByUsuario, getEmpleoByUsuario, getFinanzasByUsuario, getReingresosByUsuarioId, getCreditosByUsuario } from "@/lib/api-client"
 
 
 export default function DetallesAsociado() {
@@ -42,27 +42,23 @@ export default function DetallesAsociado() {
 
     useEffect(() => {
         async function getAsociado(): Promise<Usuario> {
-            return fetchUsuarioPorIdentificacion(id);
+            return getUsuarioByIdentificacion(id);
         }
 
         async function getCreditoPrestamo(): Promise<CreditoPrestamo[]> {
-            return fetchCreditosPorUsuario(id);
+            return getCreditosByUsuario(id);
         }
     
         async function getDireccionUsuario(): Promise<DireccionUsuario[]> {
-            return fetchDireccionPorUsuario(id);
+            return getDireccionByUsuario(id);
         }
     
         async function getEmpleo(): Promise<Empleo[]> {
-            return fetchEmpleoPorUsuario(id);
+            return getEmpleoByUsuario(id);
         }
     
         async function getFinanzasPersonales(): Promise<FinanzasPersonales[]> {
-            return fetchFinanzasPorUsuario(id);
-        }
-    
-        async function getReingresos(): Promise<ReingresosUsuario[]> {
-            return fetchReingresosPorUsuario(id);
+            return getFinanzasByUsuario(id);
         }
     
         async function onInit() {
@@ -76,6 +72,11 @@ export default function DetallesAsociado() {
             setEmpleoData(empleoData);
             const finanzasData = await getFinanzasPersonales();
             setFinanzasData(finanzasData);
+
+            async function getReingresos(): Promise<ReingresosUsuario[]> {
+            return getReingresosByUsuarioId(asociadoData.ID);
+            }
+            
             const reingresosData = await getReingresos();
             setReingresosData(reingresosData);
         }

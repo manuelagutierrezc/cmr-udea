@@ -15,10 +15,10 @@ import { pqr } from "@/lib/types/models"
 import { DataTable } from "@/components/data-table/data-table"
 
 import { useEffect, useState } from "react"
-import { fetchPqrs } from "@/lib/api-client"
+import { getPqrs } from "@/lib/api-client"
 
 async function getData(): Promise<pqr[]> {
-  return fetchPqrs();
+  return getPqrs();
 }
 
 export default function AtenderPQRS() {

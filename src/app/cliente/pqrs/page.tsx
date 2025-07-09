@@ -19,15 +19,13 @@ import { PqrsFormData } from "@/lib/schemas/pqrs-schema"
 import { PqrsColumns } from "@/lib/columns/pqrs-columns"
 import { pqr } from "@/lib/types/models"
 import { DataTable } from "@/components/data-table/data-table"
-import { mockPqrs } from "@/data/mock/pqrs-mock" // Mock data for testing purposes.
 
 import { useEffect, useState } from "react"
+import { getPqrsByUsuario, getSessionId } from "@/lib/api-client"
 
 async function getData(): Promise<pqr[]> {
-  // Fetch data from API here.
-  // It should be only the data that match the id from the current user.
-  const data: pqr[] = mockPqrs.slice(0, 3) // Mock data for testing purposes.
-  return data
+  const id = await getSessionId();
+  return getPqrsByUsuario(id);
 }
 
 export default function PQRSCliente() {

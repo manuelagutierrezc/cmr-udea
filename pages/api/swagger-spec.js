@@ -92,7 +92,7 @@ export default function handler(req, res) {
           responses: { 204: { description: "Eliminada" } },
         },
       },
-      "/api/tarjetas/usuario/[usuario_id]": {
+      "/api/tarjetas/usuario/{usuario_id}": {
         get: {
           tags: ["Tarjeta Crédito"],
           summary: "Buscar tarjetas por identificación de usuario",

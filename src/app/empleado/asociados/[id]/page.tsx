@@ -21,18 +21,17 @@ import { EmpleoColumns } from "@/lib/columns/empleo-columns"
 import { FinanzasPersonalesColumns } from "@/lib/columns/finanzas-columns"
 import { ReingresosColumns } from "@/lib/columns/reingresos-columns"
 
-// Mock data for testing purposes.
-import { mockUsuario, mockCreditoPrestamo, mockDireccionUsuario, mockEmpleo, mockFinanzas, mockReingresosUsuario } from "@/data/mock/asociados-mock"
-
 import { Capitalize } from "@/lib/utils"
 
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
+import { fetchUsuarioPorIdentificacion, fetchDireccionPorUsuario, fetchEmpleoPorUsuario, fetchFinanzasPorUsuario, fetchReingresosPorUsuario, fetchCreditosPorUsuario } from "@/lib/api-client"
 
 
 export default function DetallesAsociado() {
     const params = useParams()
-    const id = params.id
+    const rawId = params.id
+    const id = Array.isArray(rawId) ? rawId[0] : rawId
 
     const [asociadoData, setAsociadoData] = useState<Usuario>();
     const [creditoPrestamoData, setCreditoPrestamoData] = useState<CreditoPrestamo[]>([]);
@@ -43,33 +42,27 @@ export default function DetallesAsociado() {
 
     useEffect(() => {
         async function getAsociado(): Promise<Usuario> {
-            // Fetch data from API here.
-            return mockUsuario[id as unknown as number]; // Mock data for testing purposes, using id to get an element for demonstration only.
+            return fetchUsuarioPorIdentificacion(id);
         }
 
         async function getCreditoPrestamo(): Promise<CreditoPrestamo[]> {
-            // Fetch data from API here.
-            return mockCreditoPrestamo; // Mock data for testing purposes
+            return fetchCreditosPorUsuario(id);
         }
     
         async function getDireccionUsuario(): Promise<DireccionUsuario[]> {
-            // Fetch data from API here.
-            return mockDireccionUsuario; // Mock data for testing purposes
+            return fetchDireccionPorUsuario(id);
         }
     
         async function getEmpleo(): Promise<Empleo[]> {
-            // Fetch data from API here.
-            return mockEmpleo; // Mock data for testing purposes.
+            return fetchEmpleoPorUsuario(id);
         }
     
         async function getFinanzasPersonales(): Promise<FinanzasPersonales[]> {
-            // Fetch data from API here.
-            return mockFinanzas; // Mock data for testing purposes.
+            return fetchFinanzasPorUsuario(id);
         }
     
         async function getReingresos(): Promise<ReingresosUsuario[]> {
-            // Fetch data from API here.
-            return mockReingresosUsuario; // Mock data for testing purposes.
+            return fetchReingresosPorUsuario(id);
         }
     
         async function onInit() {
@@ -107,7 +100,9 @@ export default function DetallesAsociado() {
             <div className="@container/main flex flex-1 flex-col gap-2">
                 <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
                 <div className="px-4 lg:px-6">
-                    <h1 className="text-xl font-medium py-4">Detalles del asociado: {Capitalize(asociadoData?.PRIMER_NOMBRE)} {Capitalize(asociadoData?.PRIMER_APELLIDO)}</h1>
+                    <h1 className="text-xl font-medium py-4">
+                        Detalles del asociado: {Capitalize(asociadoData?.PRIMER_NOMBRE)} {Capitalize(asociadoData?.SEGUNDO_NOMBRE)} {Capitalize(asociadoData?.PRIMER_APELLIDO)} {Capitalize(asociadoData?.SEGUNDO_APELLIDO)}
+                    </h1>
                     <Tabs defaultValue="direccion">
                         <TabsList>
                             <TabsTrigger value="direccion">Dirección</TabsTrigger>
@@ -120,28 +115,28 @@ export default function DetallesAsociado() {
                             <DataCard
                                 title="Información de residencia"
                                 columns={DireccionColumns}
-                                data={direccionData[id as unknown as number]} // Using id to get an element for demonstration only
+                                data={direccionData}
                             />
                         </TabsContent>
                         <TabsContent value="empleo">
                             <DataCard
                                 title="Información laboral"
                                 columns={EmpleoColumns}
-                                data={empleoData[id as unknown as number]} // Using id to get an element for demonstration only
+                                data={empleoData}
                             />
                         </TabsContent>
                         <TabsContent value="finanzas">
                             <DataCard
                                 title="Información financiera"
                                 columns={FinanzasPersonalesColumns}
-                                data={finanzasData[id as unknown as number]} // Using id to get an element for demonstration only
+                                data={finanzasData}
                             />
                         </TabsContent>
                         <TabsContent value="reingresos">
                             <DataCard
                                 title="Reingreso"
                                 columns={ReingresosColumns}
-                                data={reingresosData[id as unknown as number]} // Using id to get an element for demonstration only
+                                data={reingresosData}
                             />
                         </TabsContent>
                         <TabsContent value="creditos">

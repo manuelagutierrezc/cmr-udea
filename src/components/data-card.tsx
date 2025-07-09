@@ -61,9 +61,7 @@ export function DataCard<TData, TValue>({ columns, data, title }: DataCardProps<
                     return (
                         <div key={String(column.accessorKey ?? label)} className="flex flex-col">
                         <span className="text-sm text-muted-foreground">{label}</span>
-                        <span className={`text-base font-medium ${isEmpty ? "text-muted-foreground/40" : ""}`}>
-                            {isEmpty ? "No disponible" : cellContent}
-                        </span>
+                        <span className={`text-base font-medium`}>{cellContent}</span>
                         </div>
                     )
                     })}

@@ -1,36 +1,49 @@
 export type Usuario = {
-    ID:                         number
-    IDENTIFICACION:             number
-    TIPO_IDENTIFICACION:        "CC" | "NRO DE NIT"
-    PRIMER_NOMBRE:              string
-    PRIMER_APELLIDO:            string
-    EDAD:                       number
-    CLIENTE:                    boolean
-    EMPLEADO:                   boolean
-    FECHA_NACIMIENTO:           Date
-    FECHA_INGRESO:              Date
-    ACTA_INGRESO:               number
-    ESTADO_CIVIL:               "SOLTERO" | "CASADO" | "DIVORCIADO"
-    PERSONAS_A_CARGO:           number
-    GENERO:                     "MASCULINO" | "FEMENINO" | "OTRO"
-    ESTADO:                     "ACTIVO" | "INACTIVO"
-    PAIS_NACIMIENTO:            string
-    DEPARTAMENTO_NACIMIENTO:    string
-    MUNICIPIO_NACIMIENTO:       string
-    PAIS_IDENTIFICACION:        string
-    PAIS_RESIDENCIA:            string
-    DEPARTAMENTO_RESIDENCIA:    string
-    CIUDAD_RESIDENCIA:          string
-    DIRECCION_RESIDENCIA:       string
-    ESTRATO:                    number
-    OCUPACION:                  string
-    NIVEL_ACADEMICO:            "BACHILLER" | "TÉCNICO" | "UNIVERSITARIO" | "POSGRADO"
-    TIPO_VIVIENDA:              "PROPIA" | "ARRENDADA"
-    ADDRESSLINE_MAIL:           string
-    ADDRESSLINE_CELULAR:        number
-    LUGAR_EXPEDICION:           string
-    RAZONSOCIAL:                string
-}
+    ID: number;
+    TIPO_IDENTIFICACION: string;
+    ACTA_INGRESO: string;
+    IDENTIFICACION: string;
+    ESTADO_CIVIL: string;
+    PAIS_NACIMIENTO: string;
+    RAZONSOCIAL: string;
+    PERSONAS_A_CARGO: number;
+    DEPARTAMENTO_NACIMIENTO: string;
+    GENERO: string;
+    ADDRESSLINE_MAIL: string;
+    MUNICIPIO_NACIMIENTO: string;
+    PAIS_IDENTIFICACION: string;
+    DIRECCION_RESIDENCIA: string;
+    TIPO_VIVIENDA: string;
+    LUGAR_EXPEDICION: string;
+    PAIS_RESIDENCIA: string;
+    ESTRATO: number;
+    FECHA_NACIMIENTO: Date;
+    DEPARTAMENTO_RESIDENCIA: string;
+    OCUPACION: string;
+    FECHA_INGRESO: Date;
+    CIUDAD_RESIDENCIA: string;
+    NIVEL_ACADEMICO: string;
+    EDAD: number;
+    ADDRESSLINE_CELULAR: string;
+    CODIGO_VERIFICACION?: string;
+    CLIENTE?: boolean;
+    TERCERO?: boolean;
+    CODEUCOR_NA?: string;
+    EMPLEADO?: boolean;
+    ASOCIADO?: boolean;
+    PROVEEDOR?: boolean;
+    PRIMER_NOMBRE?: string;
+    SEGUNDO_NOMBRE?: string;
+    PRIMER_APELLIDO?: string;
+    SEGUNDO_APELLIDO?: string;
+    SUCURSAL?: string;
+    ESTADO?: string;
+    ULTIMA_ACTUALIZACION?: Date;
+    NACIONALIDAD?: string;
+    NUMERO_HIJOS?: number;
+    MAXIMO_TITULO?: string;
+    CONYUGUE?: string;
+};
 
 export type CreditoUsuario = {
     ID:                       number;
@@ -38,7 +51,7 @@ export type CreditoUsuario = {
     NIT?:                     string;
     CodigoContable?:          number;
     ModificacionesAlCredito?: number;
-    NroCredito?:              number;
+    NroCredito?:              string;
     FechaDesembolsoInicial?:  Date;
     FechaVencimiento?:        Date;
     Morosidad?:               number;
@@ -60,7 +73,7 @@ export type CreditoUsuario = {
 
 export type CreditoPrestamo = {
     ID:                   number;
-    usuario_id:           number;
+    usuario_id:           string;
     credito_usuario_id?:  number;
     clasegarantia?:       string;
     destinocredito?:      string;
@@ -84,7 +97,7 @@ export type CreditoPrestamo = {
 
 export type TarjetaCredito = {
     ID:                   number;
-    usuario_id:           number;
+    usuario_id:           string;
     credito_usuario_id?:  number;
     TARJCREDCUPROT?:      string;
     ENTOTORGARANT?:       string;
@@ -109,7 +122,7 @@ export type ReingresosUsuario = {
 
 export type DireccionUsuario = {
     ID:                       number;
-    usuario_id:               number;
+    usuario_id:               string;
     TIPO_ZONA?:               string;
     DIRECCION_RESIDENCIA?:    string;
     DIRECCION_LABORAL?:       string;
@@ -135,7 +148,7 @@ export type DireccionUsuario = {
 
 export type Empleo = {
     ID:                       number;
-    usuario_id:               number;
+    usuario_id:               string;
     IDENTIFICACION_COMPANIA?: string;
     NOMBRE_COMPANIA?:         string;
     EMPLEO_PRINCIPAL?:        string;
@@ -154,7 +167,7 @@ export type Empleo = {
 
 export type FinanzasPersonales = {
     ID:                             number;
-    usuario_id:                     number;
+    usuario_id:                     string;
     DESCRIPCION_OTROS_INGRESOS?:    string;
     INGRESOS_OTROS?:                number;
     INGRESOS_ARRIENDOS?:            number;

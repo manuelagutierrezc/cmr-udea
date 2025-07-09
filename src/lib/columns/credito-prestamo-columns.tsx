@@ -21,33 +21,29 @@ import { CreditoUsuarioColumns } from "./credito-usuario-columns"
 import { TarjetaCreditoColumns } from "./tarjeta-credito-columns"
 import { GarantiaColumns } from "./garantia-columns"
 
-// Mock data for testing purposes.
-import { mockCreditoUsuario, mockTarjetaCredito, mockGarantia } from "@/data/mock/asociados-mock"
+import { fetchDetallesCreditoPorId, fetchGarantiasPorCreditoUsuario, fetchTarjetasPorUsuario } from "../api-client"
 
-function TableDropDown({ id }: { id: number }) {
+function TableDropDown({ CreditoUsuarioId, IdentificacionUsuario }: { CreditoUsuarioId: number, IdentificacionUsuario : string }) {
     const [openDetalles, setOpenDetalles] = useState(false)
     const [openTarjetas, setOpenTarjetas] = useState(false)
     const [openGarantias, setOpenGarantias] = useState(false)
 
     // From here, get the data for the dialogs.
-    const [detallesData, setDetallesData] = useState<CreditoUsuario[]>([]);
+    const [detallesData, setDetallesData] = useState<CreditoUsuario | null>(null);
     const [tarjetaData, setTarjetaData] = useState<TarjetaCredito[]>([]);
     const [garantiaData, setGarantiaData] = useState<Garantia[]>([]);
 
     useEffect(() => {
-        async function getDetalles(): Promise<CreditoUsuario[]> {
-            // Fetch data from API here.
-            return mockCreditoUsuario; // Mock data for testing purposes
+        async function getDetalles(): Promise<CreditoUsuario> {
+            return fetchDetallesCreditoPorId(CreditoUsuarioId);
         }
 
         async function getTarjetas(): Promise<TarjetaCredito[]> {
-            // Fetch data from API here.
-            return mockTarjetaCredito; // Mock data for testing purposes
+            return fetchTarjetasPorUsuario(IdentificacionUsuario);
         }
 
         async function getGarantias(): Promise<Garantia[]> {
-            // Fetch data from API here.
-            return mockGarantia; // Mock data for testing purposes
+            return fetchGarantiasPorCreditoUsuario(CreditoUsuarioId);
         }
 
         async function onInit() {
@@ -59,7 +55,7 @@ function TableDropDown({ id }: { id: number }) {
             setGarantiaData(garantiaData);
         }
         onInit();
-    }, [id]);
+    }, [CreditoUsuarioId, IdentificacionUsuario]);
 
     return (
         <>
@@ -84,7 +80,7 @@ function TableDropDown({ id }: { id: number }) {
             onOpenChange={setOpenDetalles}
             title="Información detallada"
             cardTitle="Detalles del crédito"
-            data={detallesData [id as unknown as number]} // Using id to get an element for demonstration only
+            data={detallesData ? [detallesData] : []}
             columns={CreditoUsuarioColumns}
         />
 
@@ -114,7 +110,7 @@ export const CreditoPrestamoColumns: ColumnDef<CreditoPrestamo>[] = [
     {
         //This is the actions column, it includes a dropdown menu.
         id: "actions",
-        cell: ({ row }) => <TableDropDown id={row.original.ID} />,
+        cell: ({ row }) => <TableDropDown CreditoUsuarioId={row.original.credito_usuario_id ?? 0} IdentificacionUsuario={row.original.usuario_id} />,
     },
     makeColumn<CreditoPrestamo>({
         key: "ID",
@@ -211,4 +207,4 @@ export const CreditoPrestamoColumns: ColumnDef<CreditoPrestamo>[] = [
         label: "Nombre Patronal",
         type: "string",
     }),
-    ]
+]

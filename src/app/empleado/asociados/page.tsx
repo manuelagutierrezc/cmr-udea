@@ -13,13 +13,13 @@ import { employeeSidebarData } from "@/data/employee-sidebar-data"
 import { UsuarioColumns } from "@/lib/columns/usuario-columns"
 import { Usuario } from "@/lib/types/models"
 import { DataTable } from "@/components/data-table/data-table"
-import { mockUsuario } from "@/data/mock/asociados-mock" // Mock data for testing purposes.
 
 import { useEffect, useState } from "react"
 
+import { fetchUsuarios } from "@/lib/api-client"
+
 async function getData(): Promise<Usuario[]> {
-  // Fetch data from API here.
-  return mockUsuario // Mock data for testing purposes.
+  return fetchUsuarios();
 }
 
 export default function ConsultarAsociados() {

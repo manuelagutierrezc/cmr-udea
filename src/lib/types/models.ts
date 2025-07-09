@@ -51,7 +51,7 @@ export type CreditoUsuario = {
     NIT?:                     string;
     CodigoContable?:          number;
     ModificacionesAlCredito?: number;
-    NroCredito?:              number;
+    NroCredito?:              string;
     FechaDesembolsoInicial?:  Date;
     FechaVencimiento?:        Date;
     Morosidad?:               number;
@@ -97,7 +97,7 @@ export type CreditoPrestamo = {
 
 export type TarjetaCredito = {
     ID:                   number;
-    usuario_id:           number;
+    usuario_id:           string;
     credito_usuario_id?:  number;
     TARJCREDCUPROT?:      string;
     ENTOTORGARANT?:       string;

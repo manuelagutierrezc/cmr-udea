@@ -1,0 +1,17 @@
+Instalación de dependencias necesarias
+-Prisma y cliente
+npm install prisma --save-dev
+npm install @prisma/client
+npm install @faker-js/faker
+-crear seed
+node prisma/seed.js    
+-dotenv (en caso de no estar incluido)
+npm install dotenv
+-swagger
+npm install swagger-ui-express swagger-jsdoc
+npm install swagger-ui-react swagger-ui --legacy-peer-deps
+cp node_modules/swagger-ui-dist/swagger-ui.css public/swagger-ui.css
+cp node_modules/swagger-ui-dist/swagger-ui-bundle.js public/swagger-ui-bundle.js
+cp node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js public/swagger-ui-standalone-preset.js
+-faker
+npm install @faker-js/faker

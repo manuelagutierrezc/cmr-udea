@@ -37,7 +37,7 @@ export default function PQRSCliente() {
     setData(auxData);
   }
 
-  const handlePqrsSubmit = (data: PqrsFormData) => {
+  const handleFormSubmit = (data: PqrsFormData) => {
     // Send data to the backend API here.
     console.log("PQRS enviada:", data)
   }
@@ -67,7 +67,7 @@ export default function PQRSCliente() {
                       <TabsTrigger value="consultar">Consultar</TabsTrigger>
                   </TabsList>
                   <TabsContent value="crear">
-                    <PqrsForm onSubmit={handlePqrsSubmit} />
+                    <PqrsForm onSubmit={handleFormSubmit} />
                   </TabsContent>
                   <TabsContent value="consultar">
                   <DataTable

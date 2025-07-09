@@ -7,7 +7,7 @@ export const pqrsSchema = z.object({
     email: z.string().email("Ingrese un correo válido"),
     tipoSolicitante: z.string().min(1, "Seleccione el tipo de solicitante"),
     pais: z.string().min(1, "Seleccione un país"),
-    provincia: z.string().min(1, "Seleccione un departamento"),
+    departamento: z.string().min(1, "Seleccione un departamento"),
     ciudad: z.string().min(1, "Seleccione una ciudad"),
     medioContacto: z.string().optional(),
     telefono: z.string().optional(),

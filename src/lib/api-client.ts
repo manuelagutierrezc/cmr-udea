@@ -1,4 +1,4 @@
-import { CreditoPrestamo, CreditoUsuario, DireccionUsuario, Empleo, FinanzasPersonales, Garantia, ReingresosUsuario, TarjetaCredito, Usuario } from "@/lib/types/models"
+import { CreditoPrestamo, CreditoUsuario, DireccionUsuario, Empleo, FinanzasPersonales, Garantia, pqr, ReingresosUsuario, TarjetaCredito, Usuario } from "@/lib/types/models"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
 
@@ -119,6 +119,18 @@ export async function fetchTarjetasPorUsuario(id: string): Promise<TarjetaCredit
 
     if (!res.ok) {
         throw new Error("Error al obtener las tarjetas")
+    }
+
+    return res.json()
+}
+
+export async function fetchPqrs(): Promise<pqr[]> {
+    const res = await fetch(`${BASE_URL}/api/pqr`, {
+        cache: "no-store",
+    })
+
+    if (!res.ok) {
+        throw new Error("Error al obtener las PQRS")
     }
 
     return res.json()

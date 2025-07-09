@@ -13,13 +13,12 @@ import { employeeSidebarData } from "@/data/employee-sidebar-data"
 import { PqrsColumns } from "@/lib/columns/pqrs-columns"
 import { pqr } from "@/lib/types/models"
 import { DataTable } from "@/components/data-table/data-table"
-import { mockPqrs } from "@/data/mock/pqrs-mock" // Mock data for testing purposes.
 
 import { useEffect, useState } from "react"
+import { fetchPqrs } from "@/lib/api-client"
 
 async function getData(): Promise<pqr[]> {
-  // Fetch data from API here.
-  return mockPqrs // Mock data for testing purposes.
+  return fetchPqrs();
 }
 
 export default function AtenderPQRS() {

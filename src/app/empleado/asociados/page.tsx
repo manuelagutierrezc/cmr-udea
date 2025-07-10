@@ -16,10 +16,10 @@ import { DataTable } from "@/components/data-table/data-table"
 
 import { useEffect, useState } from "react"
 
-import { fetchUsuarios } from "@/lib/api-client"
+import { getUsuarios } from "@/lib/api-client"
 
 async function getData(): Promise<Usuario[]> {
-  return fetchUsuarios();
+  return getUsuarios();
 }
 
 export default function ConsultarAsociados() {

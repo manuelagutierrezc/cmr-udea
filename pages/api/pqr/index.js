@@ -16,10 +16,21 @@ export default async function handler(req, res) {
     case 'POST':
       try {
         const { ID, ...body } = req.body; // prevenir uso de ID manual
-        const nuevo = await prisma.pqr.create({ data: body });
+        const now = new Date(); // The date is temporarily set from here, the prisma schema should be edited
+        const nuevo = await prisma.pqr.create({
+        data: {
+          ...body,
+          createdAt: now,
+          updatedAt: now,
+        },
+      });
         res.status(201).json(nuevo);
-      } catch {
-        res.status(400).json({ error: 'Error al crear PQR' });
+      } catch (error) {
+        console.error("Error al crear PQR:", error);
+        res.status(400).json({
+          error: 'Error al crear PQR',
+          detalle: error instanceof Error ? error.message : String(error),
+        });
       }
       break;
 

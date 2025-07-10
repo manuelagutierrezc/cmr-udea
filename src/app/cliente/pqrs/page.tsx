@@ -19,15 +19,13 @@ import { PqrsFormData } from "@/lib/schemas/pqrs-schema"
 import { PqrsColumns } from "@/lib/columns/pqrs-columns"
 import { pqr } from "@/lib/types/models"
 import { DataTable } from "@/components/data-table/data-table"
-import { mockPqrs } from "@/data/mock/pqrs-mock" // Mock data for testing purposes.
 
 import { useEffect, useState } from "react"
+import { createPqrs, getPqrsByUsuario, getSessionId } from "@/lib/api-client"
 
 async function getData(): Promise<pqr[]> {
-  // Fetch data from API here.
-  // It should be only the data that match the id from the current user.
-  const data: pqr[] = mockPqrs.slice(0, 3) // Mock data for testing purposes.
-  return data
+  const id = await getSessionId();
+  return getPqrsByUsuario(id);
 }
 
 export default function PQRSCliente() {
@@ -39,9 +37,14 @@ export default function PQRSCliente() {
     setData(auxData);
   }
 
-  const handlePqrsSubmit = (data: PqrsFormData) => {
-    // Send data to the backend API here.
-    console.log("PQRS enviada:", data)
+async function handleFormSubmit(data: PqrsFormData) {
+    try {
+      await createPqrs(data)
+      alert("PQRS enviada exitosamente.")
+    } catch (error) {
+      console.error(error)
+      alert("Error al enviar la PQRS.")
+    }
   }
   
   return (
@@ -69,14 +72,15 @@ export default function PQRSCliente() {
                       <TabsTrigger value="consultar">Consultar</TabsTrigger>
                   </TabsList>
                   <TabsContent value="crear">
-                    <PqrsForm onSubmit={handlePqrsSubmit} />
+                    <PqrsForm onSubmit={handleFormSubmit} />
                   </TabsContent>
                   <TabsContent value="consultar">
                   <DataTable
                     columns={PqrsColumns}
                     data={data}
                     filterableColumns={[
-                      { id: "estado", title: "Estado" },
+                      { id: "tipoSolicitud", title: "Tipo de Solicitud" },
+                      { id: "servicio", title: "Servicio" },
                     ]}
                   />
                   </TabsContent>

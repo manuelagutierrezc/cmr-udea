@@ -43,12 +43,12 @@ export const PqrsColumns: ColumnDef<pqr>[] = [
     }),
     makeColumn<pqr>({
         key: "estado",
-        label: "Estado",
+        label: "Departamento",
         type: "string",
     }),
     makeColumn<pqr>({
         key: "provincia",
-        label: "Provincia",
+        label: "Ciudad",
         type: "string",
     }),
     makeColumn<pqr>({

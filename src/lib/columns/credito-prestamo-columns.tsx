@@ -21,7 +21,7 @@ import { CreditoUsuarioColumns } from "./credito-usuario-columns"
 import { TarjetaCreditoColumns } from "./tarjeta-credito-columns"
 import { GarantiaColumns } from "./garantia-columns"
 
-import { fetchDetallesCreditoPorId, fetchGarantiasPorCreditoUsuario, fetchTarjetasPorUsuario } from "../api-client"
+import { getDetallesCreditoById, getGarantiasByCreditoUsuario, getTarjetasByUsuario } from "../api-client"
 
 function TableDropDown({ CreditoUsuarioId, IdentificacionUsuario }: { CreditoUsuarioId: number, IdentificacionUsuario : string }) {
     const [openDetalles, setOpenDetalles] = useState(false)
@@ -35,15 +35,15 @@ function TableDropDown({ CreditoUsuarioId, IdentificacionUsuario }: { CreditoUsu
 
     useEffect(() => {
         async function getDetalles(): Promise<CreditoUsuario> {
-            return fetchDetallesCreditoPorId(CreditoUsuarioId);
+            return getDetallesCreditoById(CreditoUsuarioId);
         }
 
         async function getTarjetas(): Promise<TarjetaCredito[]> {
-            return fetchTarjetasPorUsuario(IdentificacionUsuario);
+            return getTarjetasByUsuario(IdentificacionUsuario);
         }
 
         async function getGarantias(): Promise<Garantia[]> {
-            return fetchGarantiasPorCreditoUsuario(CreditoUsuarioId);
+            return getGarantiasByCreditoUsuario(CreditoUsuarioId);
         }
 
         async function onInit() {

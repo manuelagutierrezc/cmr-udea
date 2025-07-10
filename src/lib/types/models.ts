@@ -200,7 +200,7 @@ export type UsuarioRol = {
 
 export type pqr = {
     ID:                       number;
-    usuario_id:               number;
+    usuario_id:               string;
     tipoIdentificacion?:      string;
     documentoIdentificacion?: string;
     email?:                   string;

@@ -11,33 +11,58 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Trash, Send } from "lucide-react"
 
+import {
+    tipoIdentificacionOptions,
+    tipoSolicitanteOptions,
+    paisOptions,
+    medioContactoOptions,
+    tipoSolicitudOptions,
+    servicioOptions,
+    departamentoOptions,
+    getCiudadesPorDepartamento
+} from "@/lib/data/select-options"
+
+import { useState } from "react"
+
 interface PqrsFormProps {
     onSubmit: (data: PqrsFormData) => void
 }
 
 export function PqrsForm({ onSubmit }: PqrsFormProps) {
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<PqrsFormData>({
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm<PqrsFormData>({
         resolver: zodResolver(pqrsSchema),
         defaultValues: {
-            nombre: "",
-            tipoIdentificacion: "",
-            documentoIdentificacion: "",
-            email: "",
-            tipoSolicitante: "",
-            pais: "",
-            provincia: "",
-            ciudad: "",
-            medioContacto: "",
-            telefono: "",
-            movil: "",
-            direccion: "",
-            tipoSolicitud: "",
-            servicio: "",
-            titulo: "",
-            descripcion: "",
-            adjunto: null,
-        }
+        nombre: "",
+        tipoIdentificacion: "",
+        documentoIdentificacion: "",
+        email: "",
+        tipoSolicitante: "",
+        pais: "",
+        departamento: "",
+        ciudad: "",
+        medioContacto: "",
+        telefono: "",
+        movil: "",
+        direccion: "",
+        tipoSolicitud: "",
+        servicio: "",
+        titulo: "",
+        descripcion: "",
+        adjunto: "",
+    }
     })
+
+    const [ciudades, setCiudades] = useState<string[]>([])
+
+    const handleDepartamentoChange = (value: string) => {
+        setValue("departamento", value)
+        setCiudades(getCiudadesPorDepartamento(value).map(opt => opt.value))
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -54,13 +79,12 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>Tipo de identificación:<span className="text-accent-foreground">*</span></Label>
-                <Select onValueChange={(val: string) => setValue("tipoIdentificacion", val)}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
+                <Select onValueChange={val => setValue("tipoIdentificacion", val)}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Seleccionar" /></SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="CC">Cédula</SelectItem>
-                    <SelectItem value="CE">Cédula extranjera</SelectItem>
+                    {tipoIdentificacionOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
                 </SelectContent>
                 </Select>
                 {errors.tipoIdentificacion && <p className="text-sm text-red-500">{errors.tipoIdentificacion.message}</p>}
@@ -77,64 +101,60 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>Tipo de solicitante:<span className="text-accent-foreground">*</span></Label>
-                <Select onValueChange={(val: string) => setValue("tipoSolicitante", val)}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
+                <Select onValueChange={val => setValue("tipoSolicitante", val)}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Seleccionar" /></SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="Asociado">Asociado</SelectItem>
-                    <SelectItem value="Externo">Externo</SelectItem>
+                    {tipoSolicitanteOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
                 </SelectContent>
                 </Select>
                 {errors.tipoSolicitante && <p className="text-sm text-red-500">{errors.tipoSolicitante.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>País:<span className="text-accent-foreground">*</span></Label>
-                <Select onValueChange={(val: string) => setValue("pais", val)}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
+                <Select onValueChange={val => setValue("pais", val)}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Seleccionar" /></SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="Colombia">Colombia</SelectItem>
+                    {paisOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
                 </SelectContent>
                 </Select>
                 {errors.pais && <p className="text-sm text-red-500">{errors.pais.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>Departamento:<span className="text-accent-foreground">*</span></Label>
-                <Select onValueChange={(val: string) => setValue("tipoIdentificacion", val)}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
+                <Select onValueChange={handleDepartamentoChange}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Seleccionar" /></SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="Antioquia">Antioquia</SelectItem>
-                    <SelectItem value="Cundinamarca">Cundinamarca</SelectItem>
+                    {departamentoOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
                 </SelectContent>
                 </Select>
-                {errors.provincia && <p className="text-sm text-red-500">{errors.provincia.message}</p>}
+                {errors.departamento && <p className="text-sm text-red-500">{errors.departamento.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>Ciudad:<span className="text-accent-foreground">*</span></Label>
-                <Select onValueChange={(val: string) => setValue("ciudad", val)}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
+                <Select onValueChange={val => setValue("ciudad", val)}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Seleccionar" /></SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="Medellín">Medellín</SelectItem>
-                    <SelectItem value="Bogotá">Bogotá</SelectItem>
+                    {ciudades.map(ciudad => (
+                    <SelectItem key={ciudad} value={ciudad}>{ciudad}</SelectItem>
+                    ))}
                 </SelectContent>
                 </Select>
                 {errors.ciudad && <p className="text-sm text-red-500">{errors.ciudad.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>Medio de contacto preferido:</Label>
-                <Select onValueChange={(val: string) => setValue("medioContacto", val)}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
+                <Select onValueChange={val => setValue("medioContacto", val)}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Seleccionar" /></SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="Email">Email</SelectItem>
-                    <SelectItem value="Teléfono">Teléfono</SelectItem>
+                    {medioContactoOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
                 </SelectContent>
                 </Select>
             </div>
@@ -147,6 +167,7 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
                 <Input {...register("movil")} />
                 {errors.movil && <p className="text-sm text-red-500">{errors.movil.message}</p>}
             </div>
+
             <div className="flex flex-col space-y-2">
                 <Label>Dirección:<span className="text-accent-foreground">*</span></Label>
                 <Input {...register("direccion")} />
@@ -163,28 +184,24 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
             <CardContent className="grid gap-4">
             <div className="flex flex-col space-y-2">
                 <Label>Tipo de solicitud:<span className="text-accent-foreground">*</span></Label>
-                <Select onValueChange={(val: string) => setValue("tipoSolicitud", val)}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
+                <Select onValueChange={val => setValue("tipoSolicitud", val)}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Seleccionar" /></SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="Petición">Petición</SelectItem>
-                    <SelectItem value="Queja">Queja</SelectItem>
-                    <SelectItem value="Reclamo">Reclamo</SelectItem>
-                    <SelectItem value="Sugerencia">Sugerencia</SelectItem>
+                    {tipoSolicitudOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
                 </SelectContent>
                 </Select>
                 {errors.tipoSolicitud && <p className="text-sm text-red-500">{errors.tipoSolicitud.message}</p>}
             </div>
             <div className="flex flex-col space-y-2">
                 <Label>Servicio:<span className="text-accent-foreground">*</span></Label>
-                <Select onValueChange={(val: string) => setValue("servicio", val)}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
+                <Select onValueChange={val => setValue("servicio", val)}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Seleccionar" /></SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="Créditos">Créditos</SelectItem>
-                    <SelectItem value="Ahorros">Ahorros</SelectItem>
+                    {servicioOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
                 </SelectContent>
                 </Select>
                 {errors.servicio && <p className="text-sm text-red-500">{errors.servicio.message}</p>}
@@ -203,26 +220,32 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
                 <Label>Adjuntar archivo:</Label>
                 <Input
                     type="file"
+                    accept=".pdf,.png,.jpg,.jpeg,.docx"
                     onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                        setValue("adjunto", file);
+                    const file = e.target.files?.[0]
+                    if (file) {
+                        const reader = new FileReader()
+                        reader.onloadend = () => {
+                        const base64 = reader.result as string
+                        setValue("adjunto", base64, { shouldValidate: true })
                         }
+                        reader.readAsDataURL(file)
+                    }
                     }}
                 />
             </div>
             </CardContent>
         </Card>
         <div className="flex justify-end gap-2">
-                <Button type="reset" variant="outline">
-                <Trash className="mr-1 h-4 w-4" />
-                Borrar
-                </Button>
-                <Button type="submit">
-                <Send className="mr-1 h-4 w-4" />
-                Enviar
-                </Button>
-            </div>
+            <Button type="reset" variant="outline">
+            <Trash className="mr-1 h-4 w-4" />
+            Borrar
+            </Button>
+            <Button type="submit">
+            <Send className="mr-1 h-4 w-4" />
+            Enviar
+            </Button>
+        </div>
         </form>
     )
 }

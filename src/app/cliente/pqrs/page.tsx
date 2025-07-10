@@ -21,7 +21,7 @@ import { pqr } from "@/lib/types/models"
 import { DataTable } from "@/components/data-table/data-table"
 
 import { useEffect, useState } from "react"
-import { getPqrsByUsuario, getSessionId } from "@/lib/api-client"
+import { createPqrs, getPqrsByUsuario, getSessionId } from "@/lib/api-client"
 
 async function getData(): Promise<pqr[]> {
   const id = await getSessionId();
@@ -37,9 +37,14 @@ export default function PQRSCliente() {
     setData(auxData);
   }
 
-  const handleFormSubmit = (data: PqrsFormData) => {
-    // Send data to the backend API here.
-    console.log("PQRS enviada:", data)
+async function handleFormSubmit(data: PqrsFormData) {
+    try {
+      await createPqrs(data)
+      alert("PQRS enviada exitosamente.")
+    } catch (error) {
+      console.error(error)
+      alert("Error al enviar la PQRS.")
+    }
   }
   
   return (
@@ -74,7 +79,8 @@ export default function PQRSCliente() {
                     columns={PqrsColumns}
                     data={data}
                     filterableColumns={[
-                      { id: "estado", title: "Estado" },
+                      { id: "tipoSolicitud", title: "Tipo de Solicitud" },
+                      { id: "servicio", title: "Servicio" },
                     ]}
                   />
                   </TabsContent>

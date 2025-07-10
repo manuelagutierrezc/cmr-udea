@@ -11,7 +11,6 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Trash, Send } from "lucide-react"
 
-// Importación de opciones estáticas y función para obtener ciudades
 import {
     tipoIdentificacionOptions,
     tipoSolicitanteOptions,
@@ -54,14 +53,12 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
         servicio: "",
         titulo: "",
         descripcion: "",
-        adjunto: null,
+        adjunto: "",
     }
     })
 
-    // Estado para almacenar las ciudades disponibles según el departamento seleccionado
     const [ciudades, setCiudades] = useState<string[]>([])
 
-    // Manejar cambios en el departamento para actualizar ciudades disponibles
     const handleDepartamentoChange = (value: string) => {
         setValue("departamento", value)
         setCiudades(getCiudadesPorDepartamento(value).map(opt => opt.value))
@@ -222,11 +219,19 @@ export function PqrsForm({ onSubmit }: PqrsFormProps) {
             <div className="flex flex-col space-y-2">
                 <Label>Adjuntar archivo:</Label>
                 <Input
-                type="file"
-                onChange={(e) => {
+                    type="file"
+                    accept=".pdf,.png,.jpg,.jpeg,.docx"
+                    onChange={(e) => {
                     const file = e.target.files?.[0]
-                    if (file) setValue("adjunto", file)
-                }}
+                    if (file) {
+                        const reader = new FileReader()
+                        reader.onloadend = () => {
+                        const base64 = reader.result as string
+                        setValue("adjunto", base64, { shouldValidate: true })
+                        }
+                        reader.readAsDataURL(file)
+                    }
+                    }}
                 />
             </div>
             </CardContent>

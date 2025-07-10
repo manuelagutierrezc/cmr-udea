@@ -53,7 +53,9 @@ export default function AtenderPQRS() {
                   columns={PqrsColumns}
                   data={data}
                   filterableColumns={[
-                    { id: "estado", title: "Estado" },
+                    { id: "tipoSolicitante", title: "Tipo de Solicitante" },
+                    { id: "tipoSolicitud", title: "Tipo de Solicitud" },
+                    { id: "servicio", title: "Servicio" },
                   ]}
                 />
               </div>

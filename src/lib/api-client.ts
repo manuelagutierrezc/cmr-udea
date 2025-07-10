@@ -1,4 +1,5 @@
 import { CreditoPrestamo, CreditoUsuario, DireccionUsuario, Empleo, FinanzasPersonales, Garantia, pqr, ReingresosUsuario, TarjetaCredito, Usuario } from "@/lib/types/models"
+import { PqrsFormData } from "@/lib/schemas/pqrs-schema"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
 
@@ -164,4 +165,46 @@ export async function getPqrsByUsuario(id: string): Promise<pqr[]> {
     }
 
     return res.json()
+}
+
+export async function createPqrs(data: PqrsFormData): Promise<void> {
+    const {
+        nombre, //Field "name" is excluded, it is missing in the database.
+        adjunto, // Field "adjunto" is excluded, files must be implemented later, at the moment the API does not allow it.
+        departamento,
+        ciudad,
+        documentoIdentificacion,
+        ...rest
+    } = data
+
+    const body = {
+        ...rest,
+        usuario_id: documentoIdentificacion,
+        documentoIdentificacion: documentoIdentificacion,
+        estado: departamento,
+        provincia: ciudad,
+    }
+
+    const res = await fetch(`${BASE_URL}/api/pqr`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    })
+
+    if (!res.ok) {
+        const contentType = res.headers.get("content-type")
+        const isJson = contentType && contentType.includes("application/json")
+
+        if (isJson) {
+            const errorBody = await res.json()
+            console.error("Error al crear la PQRS:", errorBody)
+            throw new Error(errorBody?.detalle || errorBody?.error || "Error desconocido al crear la PQRS")
+        } else {
+            const text = await res.text()
+            console.error("Respuesta inesperada del servidor:", text)
+            throw new Error("Respuesta inesperada del servidor. Ver consola para más detalles.")
+        }
+    }
 }

@@ -17,7 +17,7 @@ export const pqrsSchema = z.object({
     servicio: z.string().min(1, "Seleccione un servicio"),
     titulo: z.string().min(1, "Ingrese un título"),
     descripcion: z.string().min(1, "Describa su solicitud"),
-    adjunto: z.any().optional(),
+    adjunto: z.string().optional(),
 })
 
 export type PqrsFormData = z.infer<typeof pqrsSchema>
